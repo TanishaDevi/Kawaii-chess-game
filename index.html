@@ -1,1 +1,377 @@
+<!DOCTYPE html>
 
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Kawaii Chess - Game On!</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@700;800&family=Quicksand:wght@500;700&family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@100..900&family=Quicksand:wght@100..900&display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "surface-tint": "#7f4f6b",
+                    "tertiary-container": "#8ce3d0",
+                    "tertiary": "#006b5c",
+                    "on-secondary-fixed-variant": "#4a3a89",
+                    "outline": "#817379",
+                    "surface": "#fef8f4",
+                    "secondary-fixed": "#e7deff",
+                    "on-primary-fixed": "#330d26",
+                    "surface-variant": "#e7e1de",
+                    "outline-variant": "#d3c2c9",
+                    "on-secondary-fixed": "#1d035d",
+                    "primary-fixed": "#ffd8eb",
+                    "surface-container-lowest": "#ffffff",
+                    "secondary-fixed-dim": "#cbbeff",
+                    "surface-container": "#f3ede9",
+                    "surface-bright": "#fef8f4",
+                    "secondary-container": "#b8a7ff",
+                    "on-secondary-container": "#483888",
+                    "secondary": "#6252a3",
+                    "background": "#fef8f4",
+                    "primary-fixed-dim": "#f1b5d5",
+                    "on-error-container": "#93000a",
+                    "inverse-on-surface": "#f5f0ec",
+                    "surface-container-high": "#ede7e3",
+                    "error-container": "#ffdad6",
+                    "surface-container-highest": "#e7e1de",
+                    "surface-dim": "#ded9d5",
+                    "on-tertiary-container": "#006759",
+                    "tertiary-fixed": "#9bf3df",
+                    "on-tertiary-fixed": "#00201b",
+                    "on-primary-fixed-variant": "#653853",
+                    "primary": "#7f4f6b",
+                    "on-surface": "#1d1b19",
+                    "error": "#ba1a1a",
+                    "inverse-primary": "#f1b5d5",
+                    "on-primary": "#ffffff",
+                    "on-primary-container": "#7b4c67",
+                    "inverse-surface": "#32302e",
+                    "primary-container": "#ffc2e2",
+                    "surface-container-low": "#f8f2ef",
+                    "on-tertiary": "#ffffff",
+                    "on-surface-variant": "#4f4449",
+                    "on-error": "#ffffff",
+                    "tertiary-fixed-dim": "#7fd6c3",
+                    "on-background": "#1d1b19",
+                    "on-secondary": "#ffffff",
+                    "on-tertiary-fixed-variant": "#005045"
+            },
+            "borderRadius": {
+                    "DEFAULT": "1rem",
+                    "lg": "2rem",
+                    "xl": "3rem",
+                    "full": "9999px"
+            },
+            "spacing": {
+                    "container-padding": "24px",
+                    "unit": "8px",
+                    "chess-tile-gap": "2px",
+                    "gutter": "16px"
+            },
+            "fontFamily": {
+                    "body-md": ["Quicksand"],
+                    "display-lg": ["Plus Jakarta Sans"],
+                    "headline-lg": ["Plus Jakarta Sans"],
+                    "headline-lg-mobile": ["Plus Jakarta Sans"],
+                    "label-sm": ["Quicksand"]
+            },
+            "fontSize": {
+                    "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "500"}],
+                    "display-lg": ["48px", {"lineHeight": "56px", "letterSpacing": "-0.02em", "fontWeight": "800"}],
+                    "headline-lg": ["32px", {"lineHeight": "40px", "fontWeight": "700"}],
+                    "headline-lg-mobile": ["24px", {"lineHeight": "32px", "fontWeight": "700"}],
+                    "label-sm": ["12px", {"lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "700"}]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        body {
+            font-family: 'Quicksand', sans-serif;
+            background-color: #fef8f4;
+            overflow-x: hidden;
+        }
+
+        .kawaii-shadow {
+            box-shadow: 0 16px 32px rgba(127, 79, 107, 0.12);
+        }
+
+        .kawaii-button {
+            transition: all 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            border-bottom-width: 4px;
+        }
+
+        .kawaii-button:active {
+            transform: translateY(2px);
+            border-bottom-width: 2px;
+        }
+
+        .chess-board {
+            display: grid;
+            grid-template-columns: repeat(8, 1fr);
+            grid-template-rows: repeat(8, 1fr);
+            gap: 2px;
+            aspect-ratio: 1 / 1;
+            padding: 8px;
+            background-color: #ede7e3;
+            border-radius: 1.5rem;
+            box-shadow: inset 0 4px 8px rgba(0,0,0,0.05);
+        }
+
+        .tile {
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 4px;
+            transition: all 0.2s;
+        }
+
+        .tile-light { background-color: #fef8f4; }
+        .tile-dark { background-color: #8ce3d0; opacity: 0.8; }
+
+        .chess-piece {
+            width: 85%;
+            height: 85%;
+            object-fit: contain;
+            cursor: grab;
+            transition: transform 0.2s;
+            filter: drop-shadow(0 4px 4px rgba(0,0,0,0.1));
+        }
+
+        .chess-piece:hover {
+            transform: scale(1.1) translateY(-4px);
+        }
+
+        .captured-circle {
+            width: 32px;
+            height: 32px;
+            border-radius: 9999px;
+            border: 2px solid #ffffff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: #ffd8eb;
+            box-shadow: 0 2px 4px rgba(127,79,107,0.1);
+        }
+
+        .timer-badge {
+            background-color: #ffc2e2;
+            color: #7b4c67;
+            padding: 8px 16px;
+            border-radius: 999px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-weight: 700;
+            box-shadow: 0 4px 0 #7b4c67;
+        }
+
+        .avatar-frame {
+            border: 4px solid #ffd8eb;
+            position: relative;
+        }
+
+        .status-heart {
+            position: absolute;
+            bottom: -2px;
+            right: -2px;
+            font-size: 14px;
+            color: #ffdad6;
+            background: #ba1a1a;
+            border-radius: 50%;
+            padding: 2px;
+        }
+
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 1, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-surface text-on-surface">
+<!-- Top Navigation Shell -->
+<header class="w-full top-0 px-container-padding pt-4 flex justify-between items-center w-full px-6 py-4 bg-surface dark:bg-surface-dim shadow-[0_8px_24px_rgba(127,79,107,0.12)]">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-full overflow-hidden avatar-frame bg-primary-container">
+<img class="w-full h-full object-cover" data-alt="A cute anime mascot with large expressive eyes and soft pink hair, wearing a tiny golden crown, styled as a vector character for a mobile game profile icon. The background is a soft pastel lavender." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAEhlhhVPbhDQgUotLVbrq9_FP9b5vEu9HgpkrGNz1fU1CTOOLmiIOQQjtISfPzI4ElnvnBcpiUJftYhB17IsC-TJh29Rp81stXNsfiL1rOsdQX6lJzfZiglqdLmhdi6yjjB1SsaRjxRwTdf-qY82eoTlAWVMXMFbnC_cH48QS4W30rIgEk4sD5YohysqHU2mEY_LLB0T0jP_MRlH3uaBTMcbPxHmFaf2ZFI1St13W_14T-eA4dr4g2OZsCiz2zE_AGpnZ6756Ntrs"/>
+</div>
+<h1 class="font-headline-lg-mobile text-headline-lg-mobile font-bold text-primary dark:text-primary-fixed-dim">Kawaii Chess</h1>
+</div>
+<div class="flex items-center gap-4">
+<button class="material-symbols-outlined text-primary hover:scale-105 transition-transform duration-200 active:translate-y-[2px]" data-icon="settings">settings</button>
+</div>
+</header>
+<main class="max-w-4xl mx-auto px-container-padding pt-8 pb-32">
+<!-- Opponent Info -->
+<div class="flex justify-between items-center mb-6">
+<div class="flex items-center gap-4">
+<div class="w-14 h-14 rounded-full overflow-hidden avatar-frame">
+<img class="w-full h-full object-cover" data-alt="A charming chibi-style anime character dressed in silver knight armor with a blue plume on the helmet, smiling cheerfully. The lighting is soft and bright, set against a creamy peach background." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDCTbbT7Yoj9g1R_9hBTyAls1Nyse4c84EfDDz7GPpfBV-levxPdmt3-CA5fu1SmO34-UdSRngk0S-Dhl8knDZ0mh4-9hBoad2PcVYUOdFHKhTeNEJ27sYjQL2YhhL01elsZIG3vsy1T8Miuz5X8R1KbcHYaM00oP5vhxviJTBrJGhl5ajG-Lq3pZv84SJn2VQQoBUVkwTtCzWEMS_FC328tO_xNT9_Lpwuwt7UCSEnkXr2yciKR4EdG6uFxw_2zWDnyizXbnprI2c"/>
+<span class="material-symbols-outlined status-heart" style="font-variation-settings: 'FILL' 1;">favorite</span>
+</div>
+<div>
+<p class="font-label-sm text-label-sm text-outline">Opponent</p>
+<h2 class="font-headline-lg-mobile text-headline-lg-mobile text-on-surface">Prince Choco</h2>
+</div>
+</div>
+<div class="timer-badge">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">favorite</span>
+<span class="text-headline-lg-mobile">10:45</span>
+</div>
+</div>
+<!-- Chess Board Canvas -->
+<div class="kawaii-shadow bg-surface-container p-4 rounded-lg">
+<div class="chess-board" id="board">
+<!-- Row 8 (Opponent Power Pieces) -->
+<div class="tile tile-light"><img class="chess-piece" data-alt="A cute chibi-style anime rook character designed as a small castle tower with a happy face, wearing a tiny red cape. Soft pastel aesthetic, high quality 3D render feel." src="https://lh3.googleusercontent.com/aida-public/AB6AXuC2KLTAL1r738RbHmO2LprmfFx7e9uMoMlO0WyoABXLbyDHEiHQXK3aZXnFFdCklRVo1SSiHGksKvks7Q9N4I49EMwXLDFTE1EA08pQreFZUe_jvKb5m6b-DrurXju2pRKoONAfQMrWIaNg56Dzgo4xmxLg1WeSXs8Ccn2m-A06v1g5JUWSseHkrrMfRypVSq41Uibz4bE32xmn4PqXoE3vbFGjjfNbacc9rVsLQgATQamjZsZstOY7_j9N0IvneD6dAkqAwnmmcLo"/></div>
+<div class="tile tile-dark"><img class="chess-piece" data-alt="A cute chibi knight anime character in full blue armor riding a hobby horse, smiling. Vector style with soft rounded edges and pastel colors." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBSn_NtyX21R70vac7-9_rusVL0Uq5s29D-e1cFlx-Ptp_lP1g9TLVZxnTqkdcXr0jnlULY7mxM8OgoJkHvNxIlb9G4958ukC2YC87RRPNxIIpbWgJEOr-Yeyn1fMRU86AM0Rb6ZvyN1oKa2RS7Zf5KAs_GBON68MCoJouFmGImU_UUg4BmmliGfVSixJ2acPV-7J87rvYp9UXtWaDs9P98KzdDk5yDImqSqrc3bkLSAmh-pnMmmTto936LegeiF1qlL1S6IUTKouw"/></div>
+<div class="tile tile-light"><img class="chess-piece" data-alt="A cute chibi anime bishop character dressed in colorful robes with a magic wand, soft pastel pink and mint green palette." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDiVpjPcuTRR37DUdOzkMZr4PvfpVSYMo0K17aKKfrnjDger_-gTfpDtoMl-oUJ54Xp68696cBjOW3mv_aUc9ZPw6wp2MvF10wAdssuayuhx2xCxH5E7PX6TkncaSb5sb1rEvuw6V7j5YVmItz57Pc-a9G_3VnUN2m58G4vTAsA7jBimWyjEUDuZXryTgTDg5aBfiF_gZQmV8FXO5-bNw4iONCo305IzW2dKibEi2CHGa-2vu5uVYQUIlmb62TDanJZSpL5G-zGfT8"/></div>
+<div class="tile tile-dark"><img class="chess-piece" data-alt="A beautiful chibi anime queen character with a large sparkly crown and a flowing dress, holding a heart-topped scepter. Soft pastel aesthetic." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDSnB8rmLDg68ayQpFiasJw4RTueHnxo98s_TafBOfPno6xfQJlYpbPUmZmWHTAC0RA5Lqrs4k8rGIhGGUg8Lhc1J_2Xt3IBYhX8eHeoZCbbTshL6PxZce7nhaAoU0J7RmR1CwT20t-37DNgED8tssEm_RxSh04QmiZGlM6Wkp-1b7Ms1Iw3xyw4OqKX-JCHUELZH5MeXTyYYpSnm0-Nn2hwY6XBYkK5hUtIFp2t96BOzssuxs80xHF7ZWeB2HUsBDiu1AdOW0qN4E"/></div>
+<div class="tile tile-light"><img class="chess-piece" data-alt="A cute chibi anime king character with a fluffy beard and a large golden crown, looking very peaceful. Soft pastel toy-like aesthetic." src="https://lh3.googleusercontent.com/aida-public/AB6AXuABrJqX1SmHYEipshVaoWyHjEw1G1Ga6CBaTlFaf8m6H1osEU1tfHsn_cU3GM8nw3vhU_gH9FrXnmyBfrCkb9rtyMaqtT9P7J6o_d8WQaMntYpXGMNRiRrRYFFeMpvtqhmLf1uOnOGqIEyBctwLJL9bgtqsEks-tzewV9xG5ViKAH3QDWV-2_tKS2trhHQB3CCZ8sSF3_6-Ib9KBUMwp6-yxuX_-SWk5cJbhzJ4D08NvsMeU7VFALKAhiWijSnHjHwY1CKSA3rD2XQ"/></div>
+<div class="tile tile-dark"><img class="chess-piece" data-alt="A cute chibi anime bishop character dressed in colorful robes with a magic wand, soft pastel pink and mint green palette." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCqqI-_pJTG981ybdSb0lQ66b_G60nNd0dBPmm8tWM7533KbX30Dmr-rKdj_hLiMjMjDtP5q0i_KiKA6mSmYckRuKww7zfP11_WE0RkMqevVNWhwR3l-gQXLgrT4QBfTphxyjL_eaHyJlThiJvs9bHa-oLG8_rowF1JyQKQAQ8hd0i9EBRTGyTikB9a7JsVzrSRlYnk2VPXZh1VPRVyITe1JpKgTxdlzatHcQd7c02cvkTU1te7WuAPQLNHT3mLudx-UrXlIpw5hSw"/></div>
+<div class="tile tile-light"><img class="chess-piece" data-alt="A cute chibi knight anime character in full blue armor riding a hobby horse, smiling. Vector style with soft rounded edges and pastel colors." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBObMN3Xjc-UiENcM3y4U6smffGiFEVzOL41bDrN3KHmbar278akDmC1-GCjP_GD1YJ4FrdEEm2eai6Ze8hyd90euoIhW9rd-Qtsi6yuRINI778XWUvrLoxKoGcHehhhsUrZO3A9pANSt8g6wNATqMYiwGywYF4r7X7EDUNQwTcWV0niJjrBx3rZe2zalUMMHppdH4a5LJcrGtW9N08FxJDIW1YxFeJ7jOHgqvN46mI2Gl1LMw6S1K-zT_19oJJ11VlD8iCcNM2FOw"/></div>
+<div class="tile tile-dark"><img class="chess-piece" data-alt="A cute chibi-style anime rook character designed as a small castle tower with a happy face, wearing a tiny red cape. Soft pastel aesthetic." src="https://lh3.googleusercontent.com/aida-public/AB6AXuC7As4HQxSTOpLCJ79sEqja0LBK1JAMUQWEfX2rZ5xDFyXNr_VAGnwYNhCkb6dJHP_lmPn2uoKGEF03Q776xncuQmMzz1VYKym0tSXSt1W6YRj4WSj8DvdzajxngSdnVpKXWzOeuCj-EsjsYqEgOUfJ_pJNChcrmbPe-fR4ljY6rYa6ZqSsebO4gYbn0PGzXVY6RJzcdWdIeOSS8wTrpzfznhpm8AL7gkAZQbNF00QdM3JRkcaQ7zkvnmTjiQW_bBhS41jLs0oJ4NE"/></div>
+<!-- Row 7 (Opponent Pawns) -->
+<div class="tile tile-dark"><img class="chess-piece" data-alt="A tiny cute chibi anime pawn character holding a small wooden shield, wearing a simple round helmet. Soft pastel mint background." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDVe2V78-Ke_wJHJie0JpZKF7VBx4vIr7R7ay0Ghhv5mAIOkT3svelZ8MJsigIjWU6vQ8lIkuu13WYWsGo8sVev60v4qE92f-mnMshYO45XYG1jIgnd4ec_Ii1T2VCLDNab3vegF5HBlj_nvLtw_4JDqfdNheWGBto9ATUneKAHpNp2DbJQU-fl72aTIhcEsfoBIExfEGeLZoLLKIYAiK0Cxm3SlkWGS4uDleHyemT0B18kiwx7FRSANBKC7OdoObghFKM24dJk10c"/></div>
+<div class="tile tile-light"><img class="chess-piece" data-alt="A tiny cute chibi anime pawn character holding a small wooden shield, wearing a simple round helmet. Soft pastel mint background." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBejG8TtTqXxkXlLGC5psFd8_hdebCq0mK57xdXbg7O9jtLIITQlYXit_WDJOr1_5oJMyVwSZ2ITaLwdzZbsPVJsmef4OLDfoOIb2Dnd194T4INJb7E0dPAe_50aRElzJzdafzO8xcSTRqecmJmT3haksmIjSYjaqQPVgQ_oXi7dDU2x-jvC-QMUiDMuV68VQSmFdc7sFEjzToGL_2bvUuDVHXQmvXgI2GHLQxD5HNVL7V1vFJaiLYBN_w6R4-dPsV01cot6X7sTAM"/></div>
+<div class="tile tile-dark"><img class="chess-piece" data-alt="A tiny cute chibi anime pawn character holding a small wooden shield, wearing a simple round helmet. Soft pastel mint background." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAyv3nZY2dKou1qzMhu7jt4V_GGCSDtzkHafYxDd0354zZf59yIxi_tiuPKI9tflB0xcjH_CKQBNNMEEb4Z6Af_Xg-KpBsoGWjEb-Mcep2caJ53yO04IhZD-5b1UgoIE-gqEse04jTdiRuEa0QLLuMHGVOMUCIlpYZspwat7lvYGCQ8FSvQjzR6F8ZCSUdI3_seeI_cBqf3sw5nNf5B44Rwa34X7rkodu0-8FYab5xke3cGvImYTmZ0jWPKBQtDqt1Q_uE8jQB5BXA"/></div>
+<div class="tile tile-light"><img class="chess-piece" data-alt="A tiny cute chibi anime pawn character holding a small wooden shield, wearing a simple round helmet. Soft pastel mint background." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCMSAyNE8SVJRzNFd1kgydlayapCyMUwGDCRJqG2eI17zSo2d2bRSYCzPC8HTppoB8neOetfY0bH869r0iNTZbywlVRtU-K5WnzQnUdGMkZ49Uo40EhOGpeno6M8NbPRoznEczWEjh_4Ndb6aBwamnnQtpl2uWh1XO7cUad2ldSIOXBSYMI1z-zj93xXxRDGnR3ut1BWC5s5xmOtSJy9ldMsL6_ot47P3u-57gKLoO69V_rn1HMJHy5ahqT1Wmad6jD3vFU-4Z0bZg"/></div>
+<div class="tile tile-dark"><img class="chess-piece" data-alt="A tiny cute chibi anime pawn character holding a small wooden shield, wearing a simple round helmet. Soft pastel mint background." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBgbzGimnxUqRRSjiQNM2pQgp7d1i8PO03iczprWx2xyDLtLQ8LxE4WAzJDdreFN93_Pe9wXxkbQ2EETj10DPYAIlMwrfxgV3rwH6WF654LVxHd2IByUFgyRZn1xfVu2GCc0NBrqr0IqpmRQ7RFsua5HdpdWp1Y-NX-QWqk5Sci7tLTD-ARjpR1ruUMTAtmYZ_pqkzv03GvbGeGY1T3cXaiaI4kttu7rpJZWqpGtpyhPptbcj-dFi5PuDFQdjNI6NLytoYQqhTGErs"/></div>
+<div class="tile tile-light"><img class="chess-piece" data-alt="A tiny cute chibi anime pawn character holding a small wooden shield, wearing a simple round helmet. Soft pastel mint background." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDjHfUYb3JBkyu0noYGj3kque8CGJz7JpsuVIOMrdOvhfeRTN__HWrTt-dSoJcebB9InjsgjZ-LlCDf6D3MXlfopcnnQXsEAkrwqt7mtUETH4w_23nACS7ct6ZDUuu_R52xXGjwORwR1TseELBNvosamjzkvih27JFumo8Mb-TFNkCLMnTVFdR8qtYG1-eUpP_gpsyuFX9kwhUl0uD6bWyyz3JlNf5vLzX8Vsk-cCq09f5_gBNifzSANVzzNefsbq6Kn_Ks23T-0nM"/></div>
+<div class="tile tile-dark"><img class="chess-piece" data-alt="A tiny cute chibi anime pawn character holding a small wooden shield, wearing a simple round helmet. Soft pastel mint background." src="https://lh3.googleusercontent.com/aida-public/AB6AXuA3w-b9jX7UwM3CgHhmuZS97lynVkxOVojRNDy37A0rE32tsUkDD-Jad3fwcYZmcPj7AgBZoHSR5U-8PFt6IRG6YviznG-u1LctlyFtiz373RxDFe-wfks9SeXWePvTWEZUYzhXK-HdtPA_JgDe4gefKX6W6bB_rEC0_0j0-VrXCLK5C5G8o6hyPLY1QDrEtQgbF6PyYRcZ3JyRLmcdP8_TH4hgY9ZOJBcoZfBTrqFcnMOrTrXxP_kSYge75d1oVa4rK3HEf5AuG8w"/></div>
+<div class="tile tile-light"><img class="chess-piece" data-alt="A tiny cute chibi anime pawn character holding a small wooden shield, wearing a simple round helmet. Soft pastel mint background." src="https://lh3.googleusercontent.com/aida-public/AB6AXuD3PjyorO84CQ5QO6z-decj-A9u1parb0Z6JIwDp522vFgPUL17Kal6ccPWjTbwUfzcKHd_GQZZRBUuRObxEcvAbvERcFQ3r3X3w4Uaf7-j3joDVwbsQ_4jLZ36qZq-rcs22Jf49yL-VfHQNRwcrPnWPkqBodOAB5UH2FigSobdCRpd2eXTq9E7J_jMzCfXy7o2_dbJ4A4DJF_5DkAmcujxEw8gEwLY7KFTvjvS6MviBcwtMoHLZGCLJ7VYZeMGo1zJ3RyUJ8ShzLQ"/></div>
+<!-- Row 6-3 (Empty Mid) -->
+<!-- Generative grid cells will handle visual gaps -->
+<div class="tile tile-light"></div><div class="tile tile-dark"></div><div class="tile tile-light"></div><div class="tile tile-dark"></div><div class="tile tile-light"></div><div class="tile tile-dark"></div><div class="tile tile-light"></div><div class="tile tile-dark"></div>
+<div class="tile tile-dark"></div><div class="tile tile-light"></div><div class="tile tile-dark"></div><div class="tile tile-light"></div><div class="tile tile-dark"></div><div class="tile tile-light"></div><div class="tile tile-dark"></div><div class="tile tile-light"></div>
+<div class="tile tile-light"></div><div class="tile tile-dark"></div><div class="tile tile-light"></div><div class="tile tile-dark"></div><div class="tile tile-light"></div><div class="tile tile-dark"></div><div class="tile tile-light"></div><div class="tile tile-dark"></div>
+<div class="tile tile-dark"></div><div class="tile tile-light"></div><div class="tile tile-dark"></div><div class="tile tile-light"></div><div class="tile tile-dark"></div><div class="tile tile-light"></div><div class="tile tile-dark"></div><div class="tile tile-light"></div>
+<!-- Row 2 (Player Pawns) -->
+<div class="tile tile-light"><img class="chess-piece" data-alt="A tiny cute chibi anime pawn character with pink hair and a small spear, wearing a soft cream-colored tunic. 3D toy-like finish." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDnhYWGKsfV_JsuCsAYNnrLZB1Y762a-vHBKPe8W1hm1C1xRhk4L8Pd7wH4Cq-wqhthj3n3FilF426QpQhvku56hESwwF2_lUTJGFaB30abXm2da4FRjWBSzZqixEVUGXrLQRBTOI0By_0elzF1xlduHPsgO2M9G5Xwwmw4GEYPjYX8c4YB7fqyiC1LHKSlVJu1zxmEsl5jWrQIAej7jL95PgUppXjsTMxErDmaDeLYGXUXQTDedMYN9Nqtvc-FFR2fKGn7wpnI4mE"/></div>
+<div class="tile tile-dark"><img class="chess-piece" data-alt="A tiny cute chibi anime pawn character with pink hair and a small spear, wearing a soft cream-colored tunic. 3D toy-like finish." src="https://lh3.googleusercontent.com/aida-public/AB6AXuB2XNXTEkTQSyPZPBwbJH6_Ff4EHDz8H48fIgV2p5qMUKgXu4gkm2imAg45SBac08hcCOd-oteEJeMLjh2xOaNeshZwP6LvMd1EWf6ZQFhnqJnL9ZNPMIeq0nKTDSDgJX5RWwCXGzOHAVPuLxlRidhG8blhqjmYTHLyAX948pBxEsCmdVdXmlVITJLZZpuHhkJTYm2_1vRTjv3j_n9d1O-GbwuTn3d0b80YCFKuXzZWzw4pNpJYh12GPXfq7neu0GWlYDzWsd8DXn0"/></div>
+<div class="tile tile-light"><img class="chess-piece" data-alt="A tiny cute chibi anime pawn character with pink hair and a small spear, wearing a soft cream-colored tunic. 3D toy-like finish." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBMgpUi-T98EdnYAtGCp20HPJuHCCotowUDNUPgYVv4DnNTAtlXdtTnzlem9KXPxjoNQ9QfnZWOWumry76xB3h1djZnyLmsu6oyy8J7aUYolF_eKCeKY1gvlEmSOre0yDNS2g5jVt8mXFgy3bKi2nLrKOnf3B4IGI3MbOqAQt9Xophz6jzxNN64jGSLz9IDOiQY1SqAq8ZbyJFewQWvfHiLlHHuUTy9EyVP2TKcElowYHbxJCxXTZrIJHwtw-nfvotELqlBFxayQ1o"/></div>
+<div class="tile tile-dark"><img class="chess-piece" data-alt="A tiny cute chibi anime pawn character with pink hair and a small spear, wearing a soft cream-colored tunic. 3D toy-like finish." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDwd7Q5hsUEazTEk7Y2rz6GYh7VSKKrnR04Rbo_0g9rNJ8l59hEXaRF5oeK8XCif_2QvKw63LpkMshiWDk6RK4319uWMTKt4pSpgNsYc4TNhlfRjK0-5fqzoa3KLMmnSIS5FXHQ2bqwtQYRHiBJV1q4sN71LytKVpEXXgZV0k12cP7-6n0ozDPWsXwfcwr4Nyg4YVRe5jdVCJ03u-2OGZ63ERKbB68PMa0YAnOv8ZX0vEaTNEowlfZzJazxp1hpLj1MaBYfhcADxDs"/></div>
+<div class="tile tile-light"><img class="chess-piece" data-alt="A tiny cute chibi anime pawn character with pink hair and a small spear, wearing a soft cream-colored tunic. 3D toy-like finish." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCx3d8ivKEN4tCFXfAaJx2QEbWkMCwmAwHg93QnjPu6dPF0fG1XTdnQQb6Bl7DSSUe5juj_-vjeOOse7zgc1FgjKkRgt2N5m-8Lw3Gc9n8WLl0goWC9QyxTrdS4IOvQdn0ta-jfKMvAAS2tCo6aB8TAq24GpeU0egb1-foCtpNKCuybBVeaEcq2rReCmmi6Ou3KDrkiSTxf5293qXpMMopdg3gUVnSG5blTfC-VYqzuBY88drX5ejxWT3AZmBN_EaMkjmR20UQyCSU"/></div>
+<div class="tile tile-dark"><img class="chess-piece" data-alt="A tiny cute chibi anime pawn character with pink hair and a small spear, wearing a soft cream-colored tunic. 3D toy-like finish." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAfejAdfe4uq_5hBpxt-FiPRvXPS4iq6ZZR6Nzw-88qK7Id7Dj7lQpxiBkmF6oEx_dE3cFVHvQ9hdv7vVmmB0yEghqZHr-ftulxceDOunXcORZ0z8yKDnEjNpBqwFCZfT-fX8fgGOeTswMHio3cN7J9hGXSNesZQWmEO0MNOcLq5ZtyFXwNRsGNwBhmWrnnS1ICIoOSVpQl-xkEC8S6b2iZVYtaPlct4kE3OWLCDS2UUvmicQTJQMQagRK_wxV4bKKOynqf8E4wDFI"/></div>
+<div class="tile tile-light"><img class="chess-piece" data-alt="A tiny cute chibi anime pawn character with pink hair and a small spear, wearing a soft cream-colored tunic. 3D toy-like finish." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAbPkGAsMy22GRcsyuB1u-O7lFVr2xsaVikhvers__4LN2gD-xtr3mazJI3H16FEdu_MMDTn7B4ehMJLAsxP9UTUYa8X6mFJP-U51NP2J8avCMMLMa1D9hd4aj9EOhsL2AchIX2O5axqTTHjXUIa0UMHW7UIiwT6yUxKzO19Gg9CCfpSgbR1mjwuMuuvfckve6sysBgHgWVkASgdSbpmC_IPx32_lludy-QJ4XSCE9lj8b2sg-qjKEMzCj_FJmB9rVD7pfdzyhEbhU"/></div>
+<div class="tile tile-dark"><img class="chess-piece" data-alt="A tiny cute chibi anime pawn character with pink hair and a small spear, wearing a soft cream-colored tunic. 3D toy-like finish." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDplBeRUIcrj1oo24tgDDWHtvn1ePFVqRbF32iC1CWlTePGyIfV1h3scaJy__MH6y4Eifi954kgRO2vvftCna2DM3hvzIOlC7u6naNXvof66aUhQBysrZbLiV4pqXLmvMxQ_GRlQ9EU-ODFobd5BGHah2tJbP6dvEOwwpDXO3GxYEnwBMwCY3eqef2TVxK6icAE8ReWAfqgxMxsGWrAIgeiHjYRn1IEgob0m46FVB9PTsMU4pTVyxomhAgx6dD2hy74gy4avenxAZU"/></div>
+<!-- Row 1 (Player Power Pieces) -->
+<div class="tile tile-dark"><img class="chess-piece" data-alt="A cute chibi anime rook character as a pink cake-shaped castle tower with big happy eyes. Soft pastel pink colors." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCtfSDaUdeVQ9L2XE9tfTVEScYFxLuLn4o1piwlFjui5a3k0XC8ZlCdgNLXiEkEpx0_TbXP341pJQ3g_uSlIjkwcDXP8E6lTkkYIN3-RHZamCZLsemkE8VniAexEHe4uqYbxSoDU1GvImX1bnl9Ur8rg1XwjqeGfgyF608uhGF6Go_qtUCZCGrox-zV6S3Fcgg5-aTQWemk2jcx16icfcEjgQnah6JPkADEMSfuh1T2izPNp4ElntQ29J_3hC0dg0rru7RWSkxTw0k"/></div>
+<div class="tile tile-light"><img class="chess-piece" data-alt="A cute chibi anime knight character in pink armor riding a white unicorn hobby horse. Soft rounded edges." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAZPRM2cU-mOGIUmaPlq3-iSCoxIDxrSCVv9p3A8FITVnLWGOkHCTOSnqZRYaJ4KugQT7p_icbSpXgFLY7skIQSGbgBI4OC5b8E-zxe_za_9HEyHHLhcaqfxKr-emxoE-PyliVNsO2_EmRQ215bVYVW6C8HTLE7tEX7d46B2jbf9JBfl5g4AiRaXIFklflclGQzD8TpO6Q0DfLgwVK992ZVuF5iFnKRa5fp2BfOBC3VGtBZcdY0FRyLxKwlibPKKhQfEecXU0S5Egk"/></div>
+<div class="tile tile-dark"><img class="chess-piece" data-alt="A cute chibi anime bishop character in white robes holding a sparkly star staff. Pastel aesthetic." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBAb1B-1xqCNaVsl9h2OPEwyat6oVecuSAfXES30rtmhhJ4JVcsEC6-YwOqsCEHnOr5gl5Yl1-gHyJL8rFMzNHT3SgnAc7S3CyJv23ixezutEQ3omnXb201FCDScLGDRg4ZIvH90GkKGYF2MZsgOl2Zpm037I8o7bugty17OyePj-Re0yTqsQLc3qWdj8NAPvfyMgmbJ6k7FT5Q33svR-txg2xaIKYfawMkd4NsUG7BRens4VHYW_stcd6YpB5OuZgl-djfsji2DLE"/></div>
+<div class="tile tile-light"><img class="chess-piece" data-alt="An adorable chibi princess queen character with huge eyes and a strawberry-themed dress and crown. Very cute toy-like aesthetic." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAu2fbaC5POepvKuuhlGW6P9khOk1qEmS-preGCT01V3XL4FZvRtA44n9x5U0YThJ1XxJq9Lu4aUnCYVnTBm8q1W96NwiSibj58b0T4z796P5GcoYti0qTPAYR_Uyr-tyd6wjEzuZ9BvVCTnclBgV8xjzw52-BoBkmYJMj4IT2bWa74Bq4m_OmkSHd4CspJHk83wpbn4I1X9sb2iKPIKLNXsoegyXEa5AOnrnWflPkv9Q0hgXNtWRi3rVnwLU9zjWxyWf6J-SZrHaI"/></div>
+<div class="tile tile-dark"><img class="chess-piece" data-alt="A tiny chibi anime king with a pink cape and a very big golden crown, holding a plush teddy bear. Soft pastel lighting." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCnooQ92bkvJNOSI6sWLXBatECucRyhYIMevJcYBcjyogW05D1QNAvLmECwgWAaAnYB0rsrddSMXIWznFRBqvjz-NiGDb8gEHsjlK14LBfvNYpPuolCwiRht-nWMGwFj93lPqFt_ONOO0zMRSqPzK3wtmG52vPhixLtQnBSYCPVLC5wO-f59CJHAMxgaMEA4jbsv3ly-UturdAxfIUmkkRYxA2k6nKkk14f9ilq1AeyPRMISp8SxVYUu2C9wkGWdA1IM0javftNhDM"/></div>
+<div class="tile tile-light"><img class="chess-piece" data-alt="A cute chibi anime bishop character in white robes holding a sparkly star staff. Pastel aesthetic." src="https://lh3.googleusercontent.com/aida-public/AB6AXuATDKDeghT38XqCFO2SNV5-9_binmMD7htKO-GmKNgN1NZNFWsk84OsI5JFrAgrbIEBfkA37MgzBMZyVfJ4BFT_3owdcJaxHbeLbWZhAUJ7LyjMwg2Zlqq2lmllM4TBXhiwhifKefHct502G2J5K817AvtJwA1ipDcxJLTVjqdvidqSI6JlHdDbwkw7V_bT6pfvF2oecimUHfvIUQZKGdpCdcGn1hELkGttJh6YvpNwO90x2qcX1jeI1yEQI87Nx0iIXnVFIpKS34g"/></div>
+<div class="tile tile-dark"><img class="chess-piece" data-alt="A cute chibi anime knight character in pink armor riding a white unicorn hobby horse. Soft rounded edges." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCmYk7rxpODBwA6hg1GrQzfHv-QgzvU2jsukc9NDAYyXOGkVhgO1t1WgPlpTWC2EpaAExhYfQX469NjaKGxK6YXmX91yNQ58EYr09PXhlyMhKLjRsCRaA1y3C4dUA3c1FfZ20VFsW_qGO4YSKTfLiw2gdTzCLsQddHqFUKQ3aMd5y6ShooABJjJ12TeUsUJf8WBdWvWkFttPfG0yYgqXdNyJ-yrizomXgzM1DEXGv_hUASYJEjmatbTKA5WUhMPItUmz8Cjhmn5v3k"/></div>
+<div class="tile tile-light"><img class="chess-piece" data-alt="A cute chibi anime rook character as a pink cake-shaped castle tower with big happy eyes. Soft pastel pink colors." src="https://lh3.googleusercontent.com/aida-public/AB6AXuB9E73F_itgX3J_KF_MuZZBRebnq4iTVZ_Rgbp_rsRO81TsZ8davF9SVO26h_vnrb85b674SePSC14Wysx1Bw61GxqRgACpKFaQYXQnw8dFHgrshrLSz9VISBrL-ipTRuZy15gMhk0cBbjE6qwhKWFS3cfL1EVE9IMdU1XV9-QdH4MCk4iLq5UMm03hEyJsUwaCjUOoopIkDe_rhFIBdwgQFaxE-5aE6g4TfgzzyX6Pse-TEUjsAmOYClZ9mM8UOLWx11S0rjbQo5M"/></div>
+</div>
+</div>
+<!-- Player Info & Stats -->
+<div class="mt-8 flex flex-col md:flex-row justify-between items-start md:items-center gap-6">
+<div class="flex items-center gap-4">
+<div class="w-16 h-16 rounded-full overflow-hidden avatar-frame bg-secondary-container">
+<img class="w-full h-full object-cover" data-alt="A cute anime girl with pink pigtails and heart-shaped hair accessories, smiling brightly. Styled as a premium digital game profile icon with soft, ambient lighting." src="https://lh3.googleusercontent.com/aida-public/AB6AXuB836EZYyAS_cy61N08PC08XQiy4Q1vVBeWffjjVG1PTmKQJAgpYVoCjcQ5pxGOYpgc9CKyx932IBPvsM6qCTGVwPt8-vK62BBVf8WcdzSQUlPhwILKrs488SCXX08zF8t8BSNssuPhIOHR8mAZVqa4Kq5MQTsK7iVyEqgDaJqqOYz2pTJ6qGHTzT1OvjhtRqpjF363j1y31mUHIyl252UZFSbJdlirIKFPlgBaj2e5WzQSigwMTH1zHkS6-RfmLgW3oeoLNyYy_so"/>
+<span class="material-symbols-outlined status-heart" style="font-variation-settings: 'FILL' 1;">favorite</span>
+</div>
+<div>
+<h2 class="font-headline-lg-mobile text-headline-lg-mobile text-on-surface">Sakura-chan</h2>
+<p class="font-label-sm text-label-sm text-primary">Level 42 Chess Master</p>
+</div>
+</div>
+<div class="flex flex-col gap-2">
+<span class="font-label-sm text-label-sm text-outline">Captured Treasures</span>
+<div class="flex gap-2">
+<div class="captured-circle"><img class="w-6 h-6" data-alt="A tiny chibi knight icon in blue armor." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDxxHLmta3KQwWnenn16EbWsid6mTt7CUGEbkTDzdIcwHYxYr1Sr26T73lhs-WfdDFqkqg3cSGj24ZhBbq-09pIpPNjgV-y5FTzekSDqEbQjiROCpOUxG-3UaHkZy7cw-S94XO3sSZl5HPv7c0iQPExyxYMfzWgoHmyhpuaJuRNKcu2yS5NFkoQTgwT2yvPC89RIev10yIeKvgBKykFFJz4qsdk5008CtmCKRk_gd5t3IqtY1g2Agn4cj79qBJrKhBAhIpWJPaoDQ0"/></div>
+<div class="captured-circle"><img class="w-6 h-6" data-alt="A tiny chibi pawn icon in blue colors." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCW4bJiJNBUEXaf_5rY2EPXmSdfUszDuR52Wbig-YvCXXVMsghAW6GXWVApfyz6J10PBGdkR6WdU9jvYihgt0LYNsxqWJpP1-dEBelsdhkDtS3Km7IJ9nkYapImBPNHJO7xplXXI0QoMHDJUj9ZbBIyk-iv3xVq3MoJd_uvN_PmEHEZkB9NM_20aivGcLy07a-MzIX20Sr7SdZqU3mC1sZ1NKDKiCvp5uE2BB2780QiXzgM5chtXna5r86cIBgl7FlemF1n_-maywk"/></div>
+<div class="captured-circle"><img class="w-6 h-6" data-alt="A tiny chibi pawn icon in blue colors." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBsLAjuT39wxqDNkp0xBEDcio8p6DFCQRFLK66rS8bBeiNtUGzTXX3bFnw-d2yoOaBAx6nemqZDqi3YCwkZFwkQp4O8HH1YXBXJTl80mpBD5K2G-8cEPM0WLI_Ur_v0Sjg3iGzbET_RdrHkT5JREz1zJ8Wj5aMwze8OTKzRJhNYpi-s6ofe6uTAqdZgNraKVfYNj3fbC6qTK4NwPAXYz_JWHJaUan9vCAMo4IXJ7wzfcxaZrjpU8HMMtP9UGKLSPFZlo_BLm0TZBrM"/></div>
+<div class="captured-circle opacity-40"><span class="material-symbols-outlined text-xs">add</span></div>
+</div>
+</div>
+<div class="timer-badge bg-tertiary-container text-on-tertiary-container shadow-[0_4px_0_#006b5c]">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">timer</span>
+<span class="text-headline-lg-mobile">12:20</span>
+</div>
+</div>
+</main>
+<!-- Bottom Navigation Shell -->
+<nav class="fixed bottom-0 left-0 w-full z-50 flex justify-around items-center px-4 pb-6 pt-3 bg-surface-container dark:bg-surface-container-highest shadow-[0_-8px_24px_rgba(127,79,107,0.1)] rounded-t-lg">
+<a class="flex flex-col items-center justify-center bg-primary-container dark:bg-primary text-on-primary-container dark:text-on-primary rounded-xl px-4 py-1 shadow-[0_4px_0_rgba(123,76,103,1)] transition-all duration-200" href="#">
+<span class="material-symbols-outlined" data-icon="sports_esports">sports_esports</span>
+<span class="font-label-sm text-label-sm">Play</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant dark:text-outline-variant px-4 py-1 hover:bg-primary-fixed transition-all duration-200 active:translate-y-[2px]" href="#">
+<span class="material-symbols-outlined" data-icon="school">school</span>
+<span class="font-label-sm text-label-sm">Tutorial</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant dark:text-outline-variant px-4 py-1 hover:bg-primary-fixed transition-all duration-200 active:translate-y-[2px]" href="#">
+<span class="material-symbols-outlined" data-icon="leaderboard">leaderboard</span>
+<span class="font-label-sm text-label-sm">Ranks</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant dark:text-outline-variant px-4 py-1 hover:bg-primary-fixed transition-all duration-200 active:translate-y-[2px]" href="#">
+<span class="material-symbols-outlined" data-icon="military_tech">military_tech</span>
+<span class="font-label-sm text-label-sm">Badges</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant dark:text-outline-variant px-4 py-1 hover:bg-primary-fixed transition-all duration-200 active:translate-y-[2px]" href="#">
+<span class="material-symbols-outlined" data-icon="person">person</span>
+<span class="font-label-sm text-label-sm">Profile</span>
+</a>
+</nav>
+<script>
+        // Micro-interactions for the chess board
+        document.querySelectorAll('.tile').forEach(tile => {
+            tile.addEventListener('mousedown', function() {
+                if (this.querySelector('.chess-piece')) {
+                    this.classList.add('scale-95');
+                }
+            });
+            tile.addEventListener('mouseup', function() {
+                this.classList.remove('scale-95');
+            });
+            tile.addEventListener('click', function() {
+                // Remove highlight from all others
+                document.querySelectorAll('.tile').forEach(t => t.classList.remove('ring-4', 'ring-primary-container'));
+                
+                if (this.querySelector('.chess-piece')) {
+                    this.classList.add('ring-4', 'ring-primary-container');
+                }
+            });
+        });
+
+        // Atmospheric heart sparkle effect
+        function createSparkle() {
+            const sparkle = document.createElement('span');
+            sparkle.classList.add('material-symbols-outlined', 'absolute', 'pointer-events-none', 'text-primary-container');
+            sparkle.style.fontSize = Math.random() * 20 + 10 + 'px';
+            sparkle.style.left = Math.random() * window.innerWidth + 'px';
+            sparkle.style.top = window.innerHeight + 'px';
+            sparkle.style.opacity = '0.6';
+            sparkle.innerText = 'favorite';
+            sparkle.style.transition = `all ${Math.random() * 3 + 2}s linear`;
+            
+            document.body.appendChild(sparkle);
+            
+            setTimeout(() => {
+                sparkle.style.transform = `translateY(-${window.innerHeight + 100}px) rotate(${Math.random() * 360}deg)`;
+                sparkle.style.opacity = '0';
+            }, 100);
+            
+            setTimeout(() => {
+                sparkle.remove();
+            }, 5000);
+        }
+
+        setInterval(createSparkle, 2000);
+    </script>
+</body></html>
