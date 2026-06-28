@@ -2032,3 +2032,235 @@
         });
     </script>
 </body></html>
+                   "label-sm": ["Quicksand"],
+                    "headline-lg-mobile": ["Plus Jakarta Sans"],
+                    "display-lg": ["Plus Jakarta Sans"],
+                    "body-md": ["Quicksand"]
+            },
+            "fontSize": {
+                    "headline-lg": ["32px", {"lineHeight": "40px", "fontWeight": "700"}],
+                    "label-sm": ["12px", {"lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "700"}],
+                    "headline-lg-mobile": ["24px", {"lineHeight": "32px", "fontWeight": "700"}],
+                    "display-lg": ["48px", {"lineHeight": "56px", "letterSpacing": "-0.02em", "fontWeight": "800"}],
+                    "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "500"}]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        body {
+            font-family: 'Quicksand', sans-serif;
+            overflow-x: hidden;
+        }
+        
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+
+        .bubbly-button {
+            transition: transform 0.1s ease, box-shadow 0.1s ease;
+            box-shadow: 0 4px 0 0 rgba(0,0,0,0.1);
+        }
+
+        .bubbly-button:active {
+            transform: translateY(2px);
+            box-shadow: 0 2px 0 0 rgba(0,0,0,0.1);
+        }
+
+        .primary-bubbly {
+            background-color: #7f4f6b;
+            color: white;
+            box-shadow: 0 4px 0 0 #5a384c;
+        }
+        .primary-bubbly:active {
+            box-shadow: 0 2px 0 0 #5a384c;
+        }
+
+        .secondary-bubbly {
+            background-color: #6252a3;
+            color: white;
+            box-shadow: 0 4px 0 0 #4a3e7a;
+        }
+        .secondary-bubbly:active {
+            box-shadow: 0 2px 0 0 #4a3e7a;
+        }
+
+        .tertiary-bubbly {
+            background-color: white;
+            color: #4f4449;
+            box-shadow: 0 4px 0 0 #d3c2c9;
+            border: 2px solid #e7e1de;
+        }
+        .tertiary-bubbly:active {
+            box-shadow: 0 2px 0 0 #d3c2c9;
+        }
+
+        .recessed-input {
+            box-shadow: inset 0 2px 4px 0 rgba(0,0,0,0.05);
+        }
+
+        .floating-mascot {
+            animation: float 6s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-20px) rotate(3deg); }
+            100% { transform: translateY(0px) rotate(0deg); }
+        }
+
+        .sparkle {
+            position: absolute;
+            pointer-events: none;
+            background: white;
+            border-radius: 50%;
+            animation: sparkle-anim 1.5s linear forwards;
+        }
+
+        @keyframes sparkle-anim {
+            0% { transform: scale(0) rotate(0deg); opacity: 1; }
+            100% { transform: scale(1) rotate(180deg); opacity: 0; }
+        }
+    </style>
+</head>
+<body class="bg-background min-h-screen flex flex-col items-center justify-center relative selection:bg-primary-container selection:text-primary">
+<!-- Background Pattern/Mascot -->
+<div class="fixed inset-0 z-0 pointer-events-none opacity-40">
+<div class="absolute top-20 left-20 floating-mascot hidden lg:block">
+<img class="w-64 h-64 object-contain" data-alt="A cute anime-style chess mascot character, a small fluffy kitten wearing a tiny gold crown and holding a chess pawn. The art style is high-quality 2D cel-shaded with soft pastel outlines. The character floats against a background of soft lavender and mint green shapes, perfectly matching the Kawaii Chess brand aesthetic." src="https://lh3.googleusercontent.com/aida-public/AB6AXuA5ZNnxOssVT8WIXxILvCUI3F9aDiqfbJGvLW-2NxQ3fyuy4aFVuoiJp8YhQ5N9yhFVaH_PfvTR7RdgzUxcDVa84zT-Cw4AoRB-oq4WTBJ8rVIo3hR2ig1EVo_beIYrhqDrK3loQpEL3c4T0PxP_nEML_XVD_fw6nVeCyw-ofGi8rjOvl10BYgYDvxE_-rZVrYYgij22HGnV583t8QIsulU6KgSl-mmlbalvY3E3Kk2_ehSu2hk_U5pr9CcTNSnAnPloMZC7nkM_94"/>
+</div>
+<div class="absolute bottom-20 right-20 floating-mascot hidden lg:block" style="animation-delay: -3s;">
+<img class="w-80 h-80 object-contain" data-alt="A whimsical digital illustration of a floating pink and white chess board with soft rounded edges, surrounded by sparkling stars and heart-shaped icons. The lighting is ethereal and warm, maintaining a cozy and playful gaming atmosphere with soft pastel gradients." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBCsmYwh_LAXx_6skSqBREcCupEv3IyilLlHQ-uLDutCebVlJPv7lPHlm-xu7NRSRv1iu0BHlAi_io9UpbKUNbALIrcLR5l_guhpyJvuOMGjFh1i7G9E7897Sxqnd0FfzLHVG3A-_693_-RfmW9Y3f32ySJ07Eq08mxGxHdac4C23DfBaowCOuf57DY9mwuiRvL0MO-5iCAHmMiWs6LvPkRTlSuYKP9txi1feRkq57pee33FuuhnJQpkCgJY5dj-Y3gG1uwXlXb8Fs"/>
+</div>
+<!-- Decorative Grid -->
+<div class="absolute inset-0" style="background-image: radial-gradient(#ffd8eb 2px, transparent 2px); background-size: 40px 40px;"></div>
+</div>
+<main class="z-10 w-full max-w-md px-container-padding py-8">
+<!-- Logo/Header Area -->
+<div class="text-center mb-8">
+<h1 class="font-display-lg text-display-lg text-primary drop-shadow-[0_4px_0_rgba(127,79,107,0.2)] mb-2">
+                Kawaii Chess
+            </h1>
+<p class="font-headline-lg text-primary-fixed-dim text-2xl">
+                Welcome back, Grandmaster!
+            </p>
+</div>
+<!-- Login Card -->
+<div class="bg-surface-container-lowest border-4 border-surface-container shadow-[0_16px_32px_rgba(127,79,107,0.1)] rounded-xl p-8 transition-all duration-300 hover:shadow-[0_24px_48px_rgba(127,79,107,0.15)]">
+<form class="space-y-6">
+<!-- Username/Email Field -->
+<div class="space-y-2">
+<label class="font-label-sm text-on-surface-variant block px-1 uppercase tracking-wider" for="identity">
+                        Username or Email
+                    </label>
+<div class="relative">
+<span class="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-outline-variant">person</span>
+<input class="w-full pl-12 pr-4 py-4 rounded-lg border-2 border-surface-container-high bg-surface-container-low recessed-input focus:ring-4 focus:ring-primary-container focus:border-primary outline-none transition-all font-body-md text-on-surface" id="identity" name="identity" placeholder="Your cute alias..." type="text"/>
+</div>
+</div>
+<!-- Password Field -->
+<div class="space-y-2">
+<div class="flex justify-between items-center px-1">
+<label class="font-label-sm text-on-surface-variant uppercase tracking-wider" for="password">
+                            Secret Password
+                        </label>
+<a class="font-label-sm text-primary hover:underline" href="#">Forgot?</a>
+</div>
+<div class="relative">
+<span class="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-outline-variant">lock</span>
+<input class="w-full pl-12 pr-4 py-4 rounded-lg border-2 border-surface-container-high bg-surface-container-low recessed-input focus:ring-4 focus:ring-primary-container focus:border-primary outline-none transition-all font-body-md text-on-surface" id="password" name="password" placeholder="••••••••" type="password"/>
+</div>
+</div>
+<!-- Sign In Button -->
+<button class="w-full py-4 rounded-lg font-headline-lg text-lg primary-bubbly bubbly-button flex items-center justify-center gap-2 group" type="submit">
+<span class="material-symbols-outlined group-hover:animate-bounce">playing_cards</span>
+                    Enter the Kingdom
+                </button>
+</form>
+<!-- Divider -->
+<div class="relative my-8">
+<div class="absolute inset-0 flex items-center">
+<div class="w-full border-t-2 border-surface-container-high"></div>
+</div>
+<div class="relative flex justify-center text-sm">
+<span class="px-4 bg-surface-container-lowest text-outline-variant font-label-sm">Social Play</span>
+</div>
+</div>
+<!-- Social Logins -->
+<div class="grid grid-cols-1 gap-4">
+<button class="w-full py-3 rounded-lg font-label-sm tertiary-bubbly bubbly-button flex items-center justify-center gap-3">
+<img alt="Google" class="w-5 h-5" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBN_zkS048OsfS0YsXfxpCCRhslJNfDpNRGAnnxqUHX2F1gULjWk_e1JsZo8RrCWoDf2Vx2XKRJmXd6HkpmnP7kHdJc4A9oUL5qmjivGFV0FplgExfbJEQE7oOONgKr88MZB0YFWGLaAfXqPli6OoW2Z7pRHSURzashg4IxW4yDDxpK0LDizeKYegEhgdM49Vbl0cHHaPHzePsUEmwcIViEyMgAlmVdwlHKlfUn-1g59XP464ShnEQWNsoJqY59_BJo-AealUB8XOk"/>
+                    Sign in with Google
+                </button>
+<button class="w-full py-3 rounded-lg font-label-sm secondary-bubbly bubbly-button flex items-center justify-center gap-3">
+<svg class="w-5 h-5 fill-current" viewbox="0 0 24 24">
+<path d="M20.317 4.37a19.791 19.791 0 0 0-4.885-1.515a.074.074 0 0 0-.079.037c-.21.375-.444.864-.608 1.25a18.27 18.27 0 0 0-5.487 0a12.64 12.64 0 0 0-.617-1.25a.077.077 0 0 0-.079-.037A19.736 19.736 0 0 0 3.677 4.37a.07.07 0 0 0-.032.027C.533 9.046-.32 13.58.099 18.057a.082.082 0 0 0 .031.057a19.9 19.9 0 0 0 5.993 3.03a.078.078 0 0 0 .084-.028a14.09 14.09 0 0 0 1.226-1.994a.076.076 0 0 0-.041-.106a13.107 13.107 0 0 1-1.872-.892a.077.077 0 0 1-.008-.128a10.2 10.2 0 0 0 .372-.292a.074.074 0 0 1 .077-.01c3.928 1.793 8.18 1.793 12.062 0a.074.074 0 0 1 .078.01c.12.098.246.198.373.292a.077.077 0 0 1-.006.127a12.299 12.299 0 0 1-1.873.892a.077.077 0 0 0-.041.107c.36.698.772 1.362 1.225 1.993a.076.076 0 0 0 .084.028a19.839 19.839 0 0 0 6.002-3.03a.077.077 0 0 0 .032-.054c.5-5.177-.838-9.674-3.549-13.66a.061.061 0 0 0-.031-.03zM8.02 15.33c-1.183 0-2.157-1.085-2.157-2.419c0-1.333.955-2.419 2.157-2.419c1.21 0 2.176 1.096 2.157 2.42c0 1.333-.956 2.418-2.157 2.418zm7.975 0c-1.183 0-2.157-1.085-2.157-2.419c0-1.333.955-2.419 2.157-2.419c1.21 0 2.176 1.096 2.157 2.42c0 1.333-.946 2.418-2.157 2.418z"></path>
+</svg>
+                    Sign in with Discord
+                </button>
+</div>
+</div>
+<!-- Footer Text -->
+<p class="text-center mt-8 font-body-md text-on-surface-variant">
+            New to the kingdom? <a class="text-primary font-bold hover:underline" href="#">Register your Crown ✨</a>
+</p>
+</main>
+<!-- Simple Footer for transactional screen -->
+<footer class="mt-auto py-8 w-full">
+<div class="flex flex-col items-center justify-center gap-2 text-outline-variant font-label-sm">
+<p>© 2024 Kawaii Chess. Made with love and sparkles! ✨</p>
+<div class="flex gap-4">
+<a class="hover:text-primary" href="#">Support</a>
+<a class="hover:text-primary" href="#">Privacy</a>
+<a class="hover:text-primary" href="#">Terms</a>
+</div>
+</div>
+</footer>
+<script>
+        // Micro-interaction: Sparkles on click
+        document.addEventListener('mousedown', function(e) {
+            for (let i = 0; i < 3; i++) {
+                createSparkle(e.pageX, e.pageY);
+            }
+        });
+
+        function createSparkle(x, y) {
+            const sparkle = document.createElement('div');
+            sparkle.className = 'sparkle';
+            const size = Math.random() * 10 + 5;
+            sparkle.style.width = size + 'px';
+            sparkle.style.height = size + 'px';
+            
+            const colorArr = ['#ffc2e2', '#ffd8eb', '#f1b5d5', '#ffffff'];
+            sparkle.style.backgroundColor = colorArr[Math.floor(Math.random() * colorArr.length)];
+            
+            sparkle.style.left = (x - size/2) + 'px';
+            sparkle.style.top = (y - size/2) + 'px';
+            
+            const destinationX = (Math.random() - 0.5) * 100;
+            const destinationY = (Math.random() - 0.5) * 100;
+            
+            sparkle.animate([
+                { transform: 'translate(0, 0) scale(0)', opacity: 1 },
+                { transform: `translate(${destinationX}px, ${destinationY}px) scale(1)`, opacity: 0 }
+            ], {
+                duration: 1000 + Math.random() * 500,
+                easing: 'cubic-bezier(0, .9, .57, 1)'
+            }).onfinish = () => sparkle.remove();
+            
+            document.body.appendChild(sparkle);
+        }
+
+        // Focus ring visual enhancement
+        const inputs = document.querySelectorAll('input');
+        inputs.forEach(input => {
+            input.addEventListener('focus', () => {
+                input.parentElement.parentElement.classList.add('scale-[1.02]');
+            });
+            input.addEventListener('blur', () => {
+                input.parentElement.parentElement.classList.remove('scale-[1.02]');
+            });
+        });
+    </script>
+</body></html>
