@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Kawaii Chess - Welcome Back!</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@700;800&family=Quicksand:wght@500;700&family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@100..900&family=Quicksand:wght@100..900&display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "surface-tint": "#7f4f6b",
+                    "tertiary-container": "#8ce3d0",
+                    "tertiary": "#006b5c",
+                    "on-secondary-fixed-variant": "#4a3a89",
+                    "outline": "#817379",
+                    "surface": "#fef8f4",
+                    "secondary-fixed": "#e7deff",
+                    "on-primary-fixed": "#330d26",
+                    "surface-variant": "#e7e1de",
+                    "outline-variant": "#d3c2c9",
+                    "on-secondary-fixed": "#1d035d",
+                    "primary-fixed": "#ffd8eb",
+                    "surface-container-lowest": "#ffffff",
+                    "secondary-fixed-dim": "#cbbeff",
+                    "surface-container": "#f3ede9",
+                    "surface-bright": "#fef8f4",
+                    "secondary-container": "#b8a7ff",
+                    "on-secondary-container": "#483888",
+                    "secondary": "#6252a3",
+                    "background": "#fef8f4",
+                    "primary-fixed-dim": "#f1b5d5",
+                    "on-error-container": "#93000a",
+                    "inverse-on-surface": "#f5f0ec",
+                    "surface-container-high": "#ede7e3",
+                    "error-container": "#ffdad6",
+                    "surface-container-highest": "#e7e1de",
+                    "surface-dim": "#ded9d5",
+                    "on-tertiary-container": "#006759",
+                    "tertiary-fixed": "#9bf3df",
+                    "on-tertiary-fixed": "#00201b",
+                    "on-primary-fixed-variant": "#653853",
+                    "primary": "#7f4f6b",
+                    "on-surface": "#1d1b19",
+                    "error": "#ba1a1a",
+                    "inverse-primary": "#f1b5d5",
+                    "on-primary": "#ffffff",
+                    "on-primary-container": "#7b4c67",
+                    "inverse-surface": "#32302e",
+                    "primary-container": "#ffc2e2",
+                    "surface-container-low": "#f8f2ef",
+                    "on-tertiary": "#ffffff",
+                    "on-surface-variant": "#4f4449",
+                    "on-error": "#ffffff",
+                    "tertiary-fixed-dim": "#7fd6c3",
+                    "on-background": "#1d1b19",
+                    "on-secondary": "#ffffff",
+                    "on-tertiary-fixed-variant": "#005045"
+            },
+            "borderRadius": {
+                    "DEFAULT": "1rem",
+                    "lg": "2rem",
+                    "xl": "3rem",
+                    "full": "9999px"
+            },
+            "spacing": {
+                    "container-padding": "24px",
+                    "unit": "8px",
+                    "chess-tile-gap": "2px",
+                    "gutter": "16px"
+            },
+            "fontFamily": {
+                    "body-md": ["Quicksand"],
+                    "display-lg": ["Plus Jakarta Sans"],
+                    "headline-lg": ["Plus Jakarta Sans"],
+                    "headline-lg-mobile": ["Plus Jakarta Sans"],
+                    "label-sm": ["Quicksand"]
+            },
+            "fontSize": {
+                    "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "500"}],
+                    "display-lg": ["48px", {"lineHeight": "56px", "letterSpacing": "-0.02em", "fontWeight": "800"}],
+                    "headline-lg": ["32px", {"lineHeight": "40px", "fontWeight": "700"}],
+                    "headline-lg-mobile": ["24px", {"lineHeight": "32px", "fontWeight": "700"}],
+                    "label-sm": ["12px", {"lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "700"}]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        body {
+            font-family: 'Quicksand', sans-serif;
+            background-color: #fef8f4;
+            background-image: radial-gradient(#ffd8eb 0.5px, transparent 0.5px), radial-gradient(#ffd8eb 0.5px, #fef8f4 0.5px);
+            background-size: 40px 40px;
+            background-position: 0 0, 20px 20px;
+            overflow-x: hidden;
+        }
+
+        .kawaii-pattern {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            opacity: 0.4;
+            pointer-events: none;
+            background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M30 10l2 4h-4l2-4zm-15 30l2 4h-4l2-4zm30 0l2 4h-4l2-4z' fill='%237f4f6b' fill-opacity='0.1'/%3E%3Ccircle cx='45' cy='15' r='2' fill='%237f4f6b' fill-opacity='0.1'/%3E%3C/svg%3E");
+        }
+
+        .neomorphic-button {
+            box-shadow: 0 4px 0 #653853;
+            transition: all 0.1s ease-in-out;
+        }
+
+        .neomorphic-button:active {
+            transform: translateY(2px);
+            box-shadow: 0 2px 0 #653853;
+        }
+
+        .glass-card {
+            background: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(12px);
+            border: 4px solid #ffffff;
+        }
+
+        .floating-mascot {
+            animation: float 6s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0) rotate(0deg); }
+            50% { transform: translateY(-20px) rotate(2deg); }
+        }
+
+        .sparkle {
+            position: absolute;
+            pointer-events: none;
+            animation: twinkle 1.5s infinite;
+        }
+
+        @keyframes twinkle {
+            0%, 100% { opacity: 0; transform: scale(0.5); }
+            50% { opacity: 1; transform: scale(1.2); }
+        }
+
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="min-h-screen flex items-center justify-center p-container-padding">
+<div class="kawaii-pattern"></div>
+<!-- Decorative Sparkles -->
+<span class="material-symbols-outlined sparkle text-primary-fixed-dim" style="top: 15%; left: 10%; font-size: 24px;">auto_awesome</span>
+<span class="material-symbols-outlined sparkle text-secondary-container" style="top: 80%; left: 85%; font-size: 32px; animation-delay: 0.5s;">star</span>
+<span class="material-symbols-outlined sparkle text-tertiary-container" style="top: 20%; left: 90%; font-size: 20px; animation-delay: 1s;">favorite</span>
+<main class="w-full max-w-6xl grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
+<!-- Left Side: Illustration and Mascot -->
+<div class="hidden md:flex flex-col items-center justify-center relative">
+<div class="relative w-full max-w-md aspect-square rounded-full bg-primary-container/30 flex items-center justify-center p-8">
+<!-- Mascot Image -->
+<div class="floating-mascot w-full h-full relative z-10">
+<img class="w-full h-full object-contain" data-alt="A large, incredibly cute anime girl mascot dressed in a chess-themed lolita outfit with a small crown. She is sitting on a giant soft pink pawn piece, winking and holding a tiny white knight. The art style is vibrant, soft-shaded cel-shading with a playful, magical atmosphere. Pastel pink and cream color palette dominates the scene." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAjUDRfTfu_va1c_0FkoE6MpAbrLZ7kXZgPUJk0-XfArL1--bf1nfPQIO8_cveORCH6DhUp-gIckhl14iilvhzBcJL5aDUEUDA9tNWEklV8MLC7aUvstV4nX8-561Xm4EklTlf5pit9Jx2eT2veDN-1sDtqfaEDnjZsGN_Wlgfd_ajcyU8ahCIFmdF0vyiBgQ1RdgDrkDDPFAayYnovBitJ5E6t_xwXvqqubKpzvJk7DK-arV0vUsTeZYpBTUjjovusvomKPyg8QXg"/>
+</div>
+<!-- Background Decorative Elements -->
+<div class="absolute -top-4 -right-4 w-24 h-24 bg-tertiary-container rounded-full opacity-50 blur-xl"></div>
+<div class="absolute -bottom-8 -left-4 w-32 h-32 bg-secondary-container rounded-full opacity-50 blur-xl"></div>
+</div>
+<div class="mt-8 text-center">
+<h1 class="font-display-lg text-headline-lg text-primary mb-2">Kawaii Chess</h1>
+<p class="font-body-md text-body-md text-on-surface-variant px-12">The world's most adorable strategy game. Checkmate with kindness!</p>
+</div>
+</div>
+<!-- Right Side: Sign-In Form -->
+<div class="w-full flex justify-center">
+<div class="glass-card w-full max-w-md p-8 md:p-10 rounded-lg shadow-[0_24px_48px_rgba(127,79,107,0.15)] flex flex-col">
+<!-- Mobile Logo (Visible only on small screens) -->
+<div class="md:hidden flex flex-col items-center mb-8">
+<div class="w-24 h-24 mb-4">
+<img class="w-full h-full object-contain" data-alt="A cute small anime mascot head wearing a crown, winking with a sparkle in its eye. Pastel pink colors and thick bold lines." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAE7vVCkmhwYLl0beM5qKbXxklEItt-d6W3ZR-PJAVf3gynL--bRYO6Bq6vv8_7z5sdB7GRX3JT4baW-hDlcSMzDi9pKyrniPrwO6BJ1prJB6Yv7Ig_c7EUOZdNaxvjiVspK10ghgBJT0m9yC-rVO6RlyG5cZ6yRvbt2aTLmc8yjel9HjBiXkDFPgTicXF9hXy5iHnBDivV9Vx1mhvArP8hucd-gaG9gV7vqmjLEjv5nkgr02gRejqyhZ1Lci0NYd0-_wJqOn1k4A8"/>
+</div>
+<h1 class="font-headline-lg-mobile text-headline-lg-mobile text-primary">Kawaii Chess</h1>
+</div>
+<div class="mb-8">
+<h2 class="font-headline-lg text-headline-lg text-on-surface mb-2">Welcome Back!</h2>
+<p class="font-body-md text-body-md text-on-surface-variant">Your chess pieces missed you!</p>
+</div>
+<form class="space-y-6" onsubmit="event.preventDefault();">
+<!-- Email Field -->
+<div class="space-y-2">
+<label class="font-label-sm text-label-sm text-on-surface-variant ml-2" for="email">EMAIL ADDRESS</label>
+<div class="relative group">
+<span class="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-primary-fixed-dim transition-colors group-focus-within:text-primary">mail</span>
+<input class="w-full pl-12 pr-4 py-4 rounded-xl border-none ring-4 ring-primary-container/20 bg-surface-container focus:ring-primary/40 focus:bg-white transition-all font-body-md text-body-md text-on-surface placeholder:text-outline-variant outline-none" id="email" placeholder="hello@kawaiichess.com" type="email"/>
+</div>
+</div>
+<!-- Password Field -->
+<div class="space-y-2">
+<div class="flex justify-between items-center px-2">
+<label class="font-label-sm text-label-sm text-on-surface-variant" for="password">PASSWORD</label>
+<a class="font-label-sm text-label-sm text-on-secondary-fixed-variant hover:text-secondary transition-colors" href="#">Forgot Password?</a>
+</div>
+<div class="relative group">
+<span class="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-primary-fixed-dim transition-colors group-focus-within:text-primary">lock</span>
+<input class="w-full pl-12 pr-4 py-4 rounded-xl border-none ring-4 ring-primary-container/20 bg-surface-container focus:ring-primary/40 focus:bg-white transition-all font-body-md text-body-md text-on-surface placeholder:text-outline-variant outline-none" id="password" placeholder="••••••••" type="password"/>
+</div>
+</div>
+<!-- Remember Me -->
+<div class="flex items-center space-x-3 px-2">
+<input class="w-6 h-6 rounded-md border-primary-container text-primary focus:ring-primary bg-surface-container transition-all cursor-pointer" id="remember" type="checkbox"/>
+<label class="font-body-md text-body-md text-on-surface-variant cursor-pointer select-none" for="remember">Remember me</label>
+</div>
+<!-- Submit Button -->
+<button class="neomorphic-button w-full bg-primary py-5 rounded-xl text-white font-headline-lg-mobile text-headline-lg-mobile flex items-center justify-center space-x-2 hover:bg-primary-fixed-variant group transition-all" type="submit">
+<span>Start Playing</span>
+<span class="material-symbols-outlined transition-transform group-hover:translate-x-1">play_arrow</span>
+</button>
+</form>
+<!-- Social Login Divider -->
+<div class="flex items-center my-8">
+<div class="flex-grow h-px bg-outline-variant/30"></div>
+<span class="px-4 font-label-sm text-label-sm text-outline-variant uppercase tracking-widest">or join with</span>
+<div class="flex-grow h-px bg-outline-variant/30"></div>
+</div>
+<!-- Social Buttons -->
+<div class="grid grid-cols-2 gap-4 mb-8">
+<button class="flex items-center justify-center space-x-2 py-3 rounded-xl bg-surface-container border-2 border-transparent hover:border-secondary-container transition-all">
+<img alt="Google" class="w-5 h-5" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBdNNiamDeNTagESpZXXu6FmSqKIMu_v1jl95l9BTs_U-WNf2xShdXL90Stg7uwIXw8lH1QvM903C8bJyhVE6Kd6YZ9utX2RWlZmQa6pzQrJ3Z9OXFMfNBq24c40jmSsYL4AUxgDm1r0cYWmjvyiTiC-Y6GVhceDo8Ab7IZXXioraHLFVCtQmtf_ULYreWDkcFvR8ZsmlO39NhTIDSyZ9G8yhyv7e2d8NogcNksXRr71id24ooXDKoTACHvoIlu5nTcBk0DqwhLbIM"/>
+<span class="font-label-sm text-label-sm text-on-surface">Google</span>
+</button>
+<button class="flex items-center justify-center space-x-2 py-3 rounded-xl bg-surface-container border-2 border-transparent hover:border-secondary-container transition-all">
+<span class="material-symbols-outlined text-secondary text-[20px]">hub</span>
+<span class="font-label-sm text-label-sm text-on-surface">Discord</span>
+</button>
+</div>
+<!-- Sign Up Link -->
+<div class="text-center">
+<p class="font-body-md text-body-md text-on-surface-variant">
+                        New player? 
+                        <a class="text-on-secondary-fixed-variant font-bold hover:underline ml-1" href="#">Sign up</a>
+</p>
+</div>
+</div>
+</div>
+</main>
+<!-- Micro-interaction Script -->
+<script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const inputs = document.querySelectorAll('input');
+            inputs.forEach(input => {
+                input.addEventListener('focus', () => {
+                    const icon = input.previousElementSibling;
+                    if (icon && icon.classList.contains('material-symbols-outlined')) {
+                        icon.style.transition = 'all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275)';
+                        icon.style.transform = 'translateY(-50%) scale(1.2)';
+                    }
+                });
+                input.addEventListener('blur', () => {
+                    const icon = input.previousElementSibling;
+                    if (icon && icon.classList.contains('material-symbols-outlined')) {
+                        icon.style.transform = 'translateY(-50%) scale(1)';
+                    }
+                });
+            });
+
+            // Random sparkle positioning on refresh
+            const sparkles = document.querySelectorAll('.sparkle');
+            sparkles.forEach(s => {
+                s.style.top = Math.random() * 90 + '%';
+                s.style.left = Math.random() * 90 + '%';
+            });
+        });
+    </script>
+</body></html>

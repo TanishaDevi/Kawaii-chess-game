@@ -1,0 +1,395 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Kawaii Chess - Garden Board</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@700;800&family=Quicksand:wght@500;700&family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@100..900&family=Quicksand:wght@100..900&display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "error": "#ba1a1a",
+                    "primary": "#7f4f6b",
+                    "on-tertiary-container": "#006759",
+                    "surface-bright": "#fef8f4",
+                    "on-primary-fixed-variant": "#653853",
+                    "secondary": "#6252a3",
+                    "on-surface": "#1d1b19",
+                    "surface-variant": "#e7e1de",
+                    "tertiary-fixed": "#9bf3df",
+                    "outline": "#817379",
+                    "secondary-container": "#b8a7ff",
+                    "tertiary-container": "#8ce3d0",
+                    "secondary-fixed-dim": "#cbbeff",
+                    "on-tertiary": "#ffffff",
+                    "surface-container-lowest": "#ffffff",
+                    "primary-container": "#ffc2e2",
+                    "surface-dim": "#ded9d5",
+                    "surface-container": "#f3ede9",
+                    "on-primary-fixed": "#330d26",
+                    "surface-container-high": "#ede7e3",
+                    "on-error-container": "#93000a",
+                    "error-container": "#ffdad6",
+                    "tertiary": "#006b5c",
+                    "primary-fixed": "#ffd8eb",
+                    "background": "#fef8f4",
+                    "secondary-fixed": "#e7deff",
+                    "on-background": "#1d1b19",
+                    "tertiary-fixed-dim": "#7fd6c3",
+                    "on-tertiary-fixed-variant": "#005045",
+                    "surface-container-low": "#f8f2ef",
+                    "outline-variant": "#d3c2c9",
+                    "on-secondary-container": "#483888",
+                    "on-primary": "#ffffff",
+                    "surface-container-highest": "#e7e1de",
+                    "inverse-surface": "#32302e",
+                    "inverse-primary": "#f1b5d5",
+                    "primary-fixed-dim": "#f1b5d5",
+                    "on-primary-container": "#7b4c67",
+                    "inverse-on-surface": "#f5f0ec",
+                    "on-secondary-fixed-variant": "#4a3a89",
+                    "on-secondary": "#ffffff",
+                    "on-error": "#ffffff",
+                    "on-tertiary-fixed": "#00201b",
+                    "surface-tint": "#7f4f6b",
+                    "on-surface-variant": "#4f4449",
+                    "on-secondary-fixed": "#1d035d",
+                    "surface": "#fef8f4"
+            },
+            "borderRadius": {
+                    "DEFAULT": "1rem",
+                    "lg": "2rem",
+                    "xl": "3rem",
+                    "full": "9999px"
+            },
+            "spacing": {
+                    "unit": "8px",
+                    "chess-tile-gap": "2px",
+                    "gutter": "16px",
+                    "container-padding": "24px"
+            },
+            "fontFamily": {
+                    "headline-lg": ["Plus Jakarta Sans"],
+                    "label-sm": ["Quicksand"],
+                    "headline-lg-mobile": ["Plus Jakarta Sans"],
+                    "display-lg": ["Plus Jakarta Sans"],
+                    "body-md": ["Quicksand"]
+            },
+            "fontSize": {
+                    "headline-lg": ["32px", {"lineHeight": "40px", "fontWeight": "700"}],
+                    "label-sm": ["12px", {"lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "700"}],
+                    "headline-lg-mobile": ["24px", {"lineHeight": "32px", "fontWeight": "700"}],
+                    "display-lg": ["48px", {"lineHeight": "56px", "letterSpacing": "-0.02em", "fontWeight": "800"}],
+                    "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "500"}]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .kawaii-button {
+            transition: all 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
+            box-shadow: 0 4px 0 0 rgba(0,0,0,0.1);
+        }
+        .kawaii-button:active {
+            transform: translateY(2px);
+            box-shadow: 0 2px 0 0 rgba(0,0,0,0.1);
+        }
+        .chess-tile-inner {
+            box-shadow: inset 0 2px 4px rgba(0,0,0,0.05);
+        }
+        .piece-hover:hover {
+            transform: scale(1.1) translateY(-4px);
+            filter: drop-shadow(0 8px 12px rgba(127,79,107,0.3));
+        }
+        .floating-pane {
+            backdrop-filter: blur(8px);
+        }
+        @keyframes sparkle {
+            0%, 100% { opacity: 0; transform: scale(0); }
+            50% { opacity: 1; transform: scale(1.2); }
+        }
+        .sparkle-element {
+            animation: sparkle 2s infinite ease-in-out;
+        }
+    </style>
+</head>
+<body class="bg-background text-on-background min-h-screen flex flex-col font-body-md overflow-x-hidden">
+<!-- TopNavBar -->
+<header class="bg-surface-container-low sticky top-0 z-50 shadow-[0_8px_32px_rgba(127,79,107,0.1)] w-full">
+<div class="flex justify-between items-center px-container-padding py-4 max-w-7xl mx-auto">
+<div class="font-display-lg text-display-lg text-primary drop-shadow-[0_2px_0_rgba(127,79,107,0.2)]">
+                Kawaii Chess
+            </div>
+<nav class="hidden md:flex gap-gutter items-center">
+<a class="text-primary border-b-4 border-primary pb-1 font-label-sm text-label-sm translate-y-[2px] transition-transform" href="#">Play</a>
+<a class="text-on-surface-variant font-label-sm text-label-sm hover:text-primary transition-all duration-200" href="#">Tutorials</a>
+<a class="text-on-surface-variant font-label-sm text-label-sm hover:text-primary transition-all duration-200" href="#">Rankings</a>
+</nav>
+<div class="flex items-center gap-4">
+<div class="hidden md:flex bg-surface-container-highest rounded-full px-4 py-2 items-center gap-2">
+<span class="material-symbols-outlined text-primary text-[20px]">search</span>
+<input class="bg-transparent border-none focus:ring-0 text-body-md font-body-md w-32" placeholder="Search friends..." type="text"/>
+</div>
+<button class="bg-primary-container text-on-primary-container px-6 py-2 rounded-full font-label-sm text-label-sm kawaii-button flex items-center gap-2">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">face</span>
+                    Profile
+                </button>
+</div>
+</div>
+</header>
+<main class="flex-grow flex flex-col md:flex-row max-w-7xl mx-auto w-full p-gutter md:p-container-padding gap-8 items-start">
+<!-- Sidebar Left: Player Stats & Controls -->
+<aside class="w-full md:w-80 flex flex-col gap-6 sticky top-24">
+<!-- Opponent Card -->
+<div class="bg-surface-container rounded-lg p-6 shadow-[0_16px_32px_rgba(127,79,107,0.1)] border-b-4 border-outline-variant">
+<div class="flex items-center gap-4">
+<div class="relative">
+<div class="w-16 h-16 rounded-full border-4 border-secondary overflow-hidden">
+<img class="w-full h-full object-cover" data-alt="A cute chibi anime girl character avatar with pink hair and cat ears, smiling brightly in a garden setting. High-quality digital art, soft pastel color palette, soft lighting, 3D clay-like aesthetic." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAwUytr8zqe2ehwu8KQhOSSIESZpzjWeI25bnGn1Q4Rkwe_MWu_G4xo5oaYTwTL4sU0IAaiVTBKWJIyrLJusFUAVHJJfUISyAGEAhZzv-X6v8gmie-IQ4VO13SXtE3VKAB6qaY7a3pU_1rWG7Z37V8kqnNTfG1fd-_fRhbFQpgJ9WKOGux2vf45WLeIPEwkJPgW0ohKcRovaisiN-S_ypJWRWMLoJ-FbgYEZuBXWiP4a0kXR0Y2CF1el0sFtaer0rrfCPlkOlIpr4Y"/>
+</div>
+<div class="absolute bottom-0 right-0 w-4 h-4 bg-tertiary rounded-full border-2 border-surface-container flex items-center justify-center">
+<span class="text-[8px] text-white">❤️</span>
+</div>
+</div>
+<div>
+<h3 class="font-headline-lg text-headline-lg text-secondary">MochiMochi</h3>
+<p class="text-label-sm text-on-surface-variant flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px]">star</span>
+                            Rating: 1420
+                        </p>
+</div>
+</div>
+<div class="mt-4 bg-surface-container-high rounded-full px-4 py-2 flex justify-between items-center">
+<span class="font-label-sm text-primary">05:42</span>
+<div class="flex gap-1">
+<div class="w-2 h-2 rounded-full bg-secondary"></div>
+<div class="w-2 h-2 rounded-full bg-secondary"></div>
+<div class="w-2 h-2 rounded-full bg-outline-variant"></div>
+</div>
+</div>
+</div>
+<!-- Game Actions -->
+<div class="flex flex-col gap-3">
+<button class="w-full bg-secondary-container text-on-secondary-container py-4 rounded-lg font-headline-lg text-headline-lg-mobile kawaii-button flex items-center justify-center gap-2 border-b-4 border-secondary">
+<span class="material-symbols-outlined">handshake</span>
+                    Offer Draw
+                </button>
+<button class="w-full bg-error-container text-on-error-container py-4 rounded-lg font-headline-lg text-headline-lg-mobile kawaii-button flex items-center justify-center gap-2 border-b-4 border-error">
+<span class="material-symbols-outlined">flag</span>
+                    Resign
+                </button>
+</div>
+<!-- Chat Box -->
+<div class="bg-surface-container-low rounded-lg p-4 shadow-sm border border-outline-variant flex flex-col h-64">
+<div class="flex-grow overflow-y-auto flex flex-col gap-2 mb-4 pr-2">
+<div class="bg-secondary-fixed text-on-secondary-fixed-variant rounded-lg p-2 text-label-sm max-w-[80%] self-start">
+                        GLHF! Your board theme is so cute! ✨
+                    </div>
+<div class="bg-primary-fixed text-on-primary-fixed-variant rounded-lg p-2 text-label-sm max-w-[80%] self-end">
+                        Thank you! Let's have a fun game 🌸
+                    </div>
+</div>
+<div class="relative">
+<input class="w-full bg-surface-container-highest border-none rounded-full px-4 py-2 text-body-md pr-10 focus:ring-2 focus:ring-primary" placeholder="Type a message..." type="text"/>
+<button class="absolute right-2 top-1/2 -translate-y-1/2 text-primary">
+<span class="material-symbols-outlined">send</span>
+</button>
+</div>
+</div>
+</aside>
+<!-- Center: Chess Board -->
+<section class="flex-grow flex flex-col items-center gap-6">
+<div class="relative bg-tertiary-container p-6 rounded-lg shadow-[0_32px_64px_rgba(0,107,92,0.15)] overflow-hidden">
+<!-- Background Decorations -->
+<div class="absolute top-2 left-2 sparkle-element">✨</div>
+<div class="absolute bottom-4 right-4 sparkle-element">🌸</div>
+<!-- The Board Tray -->
+<div class="grid grid-cols-8 grid-rows-8 bg-surface-container-highest p-1 rounded-sm gap-chess-tile-gap shadow-inner border-4 border-white/20">
+<!-- Generation of board squares -->
+<!-- Row 1 (Light square start) -->
+<div class="w-12 h-12 md:w-20 md:h-20 bg-surface-container-low flex items-center justify-center rounded-[4px] chess-tile-inner relative group">
+<img class="w-4/5 h-4/5 object-contain piece-hover cursor-pointer transition-all" data-alt="Chibi anime character chess piece, a tiny cute king with a golden crown and purple royal robes, soft 3D stylized character design, pastel lavender tones, kawaii garden theme." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBLqKmFC2y4vGgAMpZiGLW5pfI5HyqGT4QYtWtJ2JLHddN_rQm7hqwPsYgWNFMCDo-AXqTQnWhykG-QeFDIhGUlAQJNYLHFWl0wBxr0MwqozoL8kUtT8ooNg7Cx8EfnID4C88Z-ExD6_bbtgzEvGW1OUNNrxKqhHV8wqAqyeauXj1FbEpzneHsFnr0OJwkdHtayvOQtb2scOhKXzS9VsgPMlZhvDxNNBaP8zhdR8RWNq5ZbF2a9y4OBF5ZEZmR-Fkin3Fu03XphQV4"/>
+</div>
+<div class="w-12 h-12 md:w-20 md:h-20 bg-secondary-fixed flex items-center justify-center rounded-[4px] chess-tile-inner"></div>
+<div class="w-12 h-12 md:w-20 md:h-20 bg-surface-container-low flex items-center justify-center rounded-[4px] chess-tile-inner"></div>
+<div class="w-12 h-12 md:w-20 md:h-20 bg-secondary-fixed flex items-center justify-center rounded-[4px] chess-tile-inner"></div>
+<div class="w-12 h-12 md:w-20 md:h-20 bg-surface-container-low flex items-center justify-center rounded-[4px] chess-tile-inner"></div>
+<div class="w-12 h-12 md:w-20 md:h-20 bg-secondary-fixed flex items-center justify-center rounded-[4px] chess-tile-inner"></div>
+<div class="w-12 h-12 md:w-20 md:h-20 bg-surface-container-low flex items-center justify-center rounded-[4px] chess-tile-inner"></div>
+<div class="w-12 h-12 md:w-20 md:h-20 bg-secondary-fixed flex items-center justify-center rounded-[4px] chess-tile-inner"></div>
+<!-- Row 2 -->
+<div class="w-12 h-12 md:w-20 md:h-20 bg-secondary-fixed flex items-center justify-center rounded-[4px] chess-tile-inner">
+<img class="w-3/4 h-3/4 object-contain piece-hover cursor-pointer transition-all" data-alt="Cute chibi anime pawn character, a tiny character with a leaf hat and green garden apron, sitting comfortably, high-quality digital illustration, pastel colors, soft toy look." src="https://lh3.googleusercontent.com/aida-public/AB6AXuC_cLAwj0tbH02i2ZjUo71nA5HOCRw-u6fgN2eoCV0tYlTz7lqDmPtTvT3DIPAa2Q5_ejRVBRiF7as35EvmsrJtD1lHi6ch2xkywBO5rCb11PgBV2RJa1qbg0_bvUOZ5LCjyiU1JkzUEA5dI1R6kLpbX49sg-7GBQnSayS2611MwrjYWvvXYuMnmU1KD1pRiZ1s0fgfJEBwJglJPmuTyAUfRh7l-qimqnNf-1DvSK5Vb-vw8eFSXSM1oF1J42EqUBcUYCGfcx4-cew"/>
+</div>
+<div class="w-12 h-12 md:w-20 md:h-20 bg-surface-container-low flex items-center justify-center rounded-[4px] chess-tile-inner"></div>
+<div class="w-12 h-12 md:w-20 md:h-20 bg-secondary-fixed flex items-center justify-center rounded-[4px] chess-tile-inner"></div>
+<div class="w-12 h-12 md:w-20 md:h-20 bg-surface-container-low flex items-center justify-center rounded-[4px] chess-tile-inner"></div>
+<div class="w-12 h-12 md:w-20 md:h-20 bg-secondary-fixed flex items-center justify-center rounded-[4px] chess-tile-inner"></div>
+<div class="w-12 h-12 md:w-20 md:h-20 bg-surface-container-low flex items-center justify-center rounded-[4px] chess-tile-inner"></div>
+<div class="w-12 h-12 md:w-20 md:h-20 bg-secondary-fixed flex items-center justify-center rounded-[4px] chess-tile-inner"></div>
+<div class="w-12 h-12 md:w-20 md:h-20 bg-surface-container-low flex items-center justify-center rounded-[4px] chess-tile-inner"></div>
+<!-- Row 3-6 (Empty) -->
+<div class="contents">
+<!-- Repeated tiles for brevity in mock -->
+<div class="w-12 h-12 md:w-20 md:h-20 bg-surface-container-low rounded-[4px] chess-tile-inner"></div>
+<div class="w-12 h-12 md:w-20 md:h-20 bg-secondary-fixed rounded-[4px] chess-tile-inner"></div>
+<div class="w-12 h-12 md:w-20 md:h-20 bg-surface-container-low rounded-[4px] chess-tile-inner"></div>
+<div class="w-12 h-12 md:w-20 md:h-20 bg-secondary-fixed rounded-[4px] chess-tile-inner"></div>
+<div class="w-12 h-12 md:w-20 md:h-20 bg-surface-container-low rounded-[4px] chess-tile-inner"></div>
+<div class="w-12 h-12 md:w-20 md:h-20 bg-secondary-fixed rounded-[4px] chess-tile-inner"></div>
+<div class="w-12 h-12 md:w-20 md:h-20 bg-surface-container-low rounded-[4px] chess-tile-inner"></div>
+<div class="w-12 h-12 md:w-20 md:h-20 bg-secondary-fixed rounded-[4px] chess-tile-inner"></div>
+<!-- ... repeated -->
+<div class="w-12 h-12 md:w-20 md:h-20 bg-secondary-fixed rounded-[4px] border-4 border-primary/40 flex items-center justify-center">
+<!-- Indicator for move destination -->
+<div class="w-4 h-4 rounded-full bg-primary/20"></div>
+</div>
+<div class="w-12 h-12 md:w-20 md:h-20 bg-surface-container-low rounded-[4px] chess-tile-inner"></div>
+<div class="w-12 h-12 md:w-20 md:h-20 bg-secondary-fixed rounded-[4px] chess-tile-inner"></div>
+<div class="w-12 h-12 md:w-20 md:h-20 bg-surface-container-low rounded-[4px] chess-tile-inner"></div>
+<div class="w-12 h-12 md:w-20 md:h-20 bg-secondary-fixed rounded-[4px] chess-tile-inner"></div>
+<div class="w-12 h-12 md:w-20 md:h-20 bg-surface-container-low rounded-[4px] chess-tile-inner"></div>
+<div class="w-12 h-12 md:w-20 md:h-20 bg-secondary-fixed rounded-[4px] chess-tile-inner"></div>
+<div class="w-12 h-12 md:w-20 md:h-20 bg-surface-container-low rounded-[4px] chess-tile-inner"></div>
+</div>
+<!-- Row 7 (Your Pieces) -->
+<div class="w-12 h-12 md:w-20 md:h-20 bg-secondary-fixed flex items-center justify-center rounded-[4px] chess-tile-inner">
+<img class="w-3/4 h-3/4 object-contain piece-hover cursor-pointer transition-all" data-alt="Chibi anime white pawn piece, a cute character in a white flower dress with a tiny watering can, soft 3D stylized design, high-quality digital art, garden theme." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDUIu5G5zhvYDp6DwLQxcV6e4xfeZyJ4GQa2Ms2nGF26o9_Vi8gFkIb2IKJ1kZj905Ge0eq31TJxQq-bOBEPlbk3iTNpCjZqnpmnKsIG1t1Sfo2hKdrkZiu1opk45vD_XpUKjw8Kyg2lPlP83uN4x9dMuUmCqk79D_NnxLBHNh3NgpjKtj3sta38G4tdyFje5iaIhrZ_EK7IZHrPoLti9bfuK0nhItCXYZDrV32l8SirYduLdnCVpXMO-x5Gs5xZEoiX3LlAdjsrfg"/>
+</div>
+<div class="w-12 h-12 md:w-20 md:h-20 bg-surface-container-low flex items-center justify-center rounded-[4px] chess-tile-inner">
+<img class="w-3/4 h-3/4 object-contain piece-hover cursor-pointer transition-all" data-alt="Chibi anime white pawn piece, a cute character in a white flower dress with a tiny watering can, soft 3D stylized design, high-quality digital art, garden theme." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAk-PO21J0X0gQwRmEcAbiYVInboCXJgWH0HUvlQ5kShCJgI3wY9dJ6594qeBrYEJ5hXWq8ujB8F2kX9M5CakJmvuymB841MX46U4iWjp6IvZhhGfq2kstWx28uMBVuUBBHzO-aU-KfZWK34QcQ8ZfLrZVHDqPGA6WSdn1Y4HYrAnYMcEZY1r_uvB3uC1072-iwNJwtz-e9aS1SF5-SvpTHpG01s-w-A5MCMeS3hWdXjcOyS0Of2QZ4N1oTVI2MpF14gm8H9pjcjP8"/>
+</div>
+<div class="w-12 h-12 md:w-20 md:h-20 bg-secondary-fixed flex items-center justify-center rounded-[4px] chess-tile-inner"></div>
+<div class="w-12 h-12 md:w-20 md:h-20 bg-surface-container-low flex items-center justify-center rounded-[4px] chess-tile-inner"></div>
+<div class="w-12 h-12 md:w-20 md:h-20 bg-secondary-fixed flex items-center justify-center rounded-[4px] chess-tile-inner"></div>
+<div class="w-12 h-12 md:w-20 md:h-20 bg-surface-container-low flex items-center justify-center rounded-[4px] chess-tile-inner"></div>
+<div class="w-12 h-12 md:w-20 md:h-20 bg-secondary-fixed flex items-center justify-center rounded-[4px] chess-tile-inner"></div>
+<div class="w-12 h-12 md:w-20 md:h-20 bg-surface-container-low flex items-center justify-center rounded-[4px] chess-tile-inner"></div>
+<!-- Row 8 -->
+<div class="w-12 h-12 md:w-20 md:h-20 bg-surface-container-low flex items-center justify-center rounded-[4px] chess-tile-inner"></div>
+<div class="w-12 h-12 md:w-20 md:h-20 bg-secondary-fixed flex items-center justify-center rounded-[4px] chess-tile-inner"></div>
+<div class="w-12 h-12 md:w-20 md:h-20 bg-surface-container-low flex items-center justify-center rounded-[4px] chess-tile-inner"></div>
+<div class="w-12 h-12 md:w-20 md:h-20 bg-secondary-fixed flex items-center justify-center rounded-[4px] chess-tile-inner"></div>
+<div class="w-12 h-12 md:w-20 md:h-20 bg-surface-container-low flex items-center justify-center rounded-[4px] chess-tile-inner">
+<img class="w-4/5 h-4/5 object-contain piece-hover cursor-pointer transition-all" data-alt="Chibi anime white queen piece, a majestic cute character with a floral staff and a crown of daisies, soft 3D rendering, pastel tones, kawaii aesthetics." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDF_fAPUS2xbtTmbZvgTfGOgGVPVc1yqtA2LdReHC-l1PslMX8ZVtqIuKKPbMXM-35EqJtwjZ50X1oBqBBfbHiI2fsxiiONybx_pX4EDxFU39Og1pE_NPvdcKPzl2g4q3CPdoo3vvuA8y_hVPe3lL4RKWI_eAtC1v0P0y7SWeyrZNK-E-h3fCq7_c7M2a8wTRfypVF3GNbNnRnCYUHHZ75A5xD2-2RM9aQgD-JVITXLqq1Xrug5FGTQxQlupQBmgGJIiMGfQnh8omA"/>
+</div>
+<div class="w-12 h-12 md:w-20 md:h-20 bg-secondary-fixed flex items-center justify-center rounded-[4px] chess-tile-inner"></div>
+<div class="w-12 h-12 md:w-20 md:h-20 bg-surface-container-low flex items-center justify-center rounded-[4px] chess-tile-inner"></div>
+<div class="w-12 h-12 md:w-20 md:h-20 bg-secondary-fixed flex items-center justify-center rounded-[4px] chess-tile-inner"></div>
+</div>
+</div>
+<!-- Player Self Card -->
+<div class="w-full max-w-2xl bg-surface-container rounded-lg p-6 shadow-sm border-b-4 border-primary/20 flex justify-between items-center">
+<div class="flex items-center gap-4">
+<div class="relative">
+<div class="w-16 h-16 rounded-full border-4 border-primary overflow-hidden">
+<img class="w-full h-full object-cover" data-alt="Chibi anime boy character avatar with blue hair and a garden hat, holding a tiny chess piece, smiling warmly. Soft light, digital art style, pastel aesthetic." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDZRxARe7r-6Mbj_YloTjqzPBRgb_oEiQoXjfJQxGVM3IunRtzgVUcK9gGTLDI2zW70oZYnmAqoWBLkqGQ9CpTduZiC95Ryz_C2CvdGAaNjNK2tENgiRQJc9ZzbIBO757wdLvnq1hy3So0D8MYOPi-sGnrVSDl4ZzPsBqAASWRYupQJSbGt9m865rZ0FcDz8wzOwPUmWGfX8Fa8l5zViJu1bCv5ha_qIarSkdt0G9eZL5d_t9CkiO56I-YUNSwvAcB8ttAbz0mNnLc"/>
+</div>
+<div class="absolute bottom-0 right-0 w-4 h-4 bg-tertiary rounded-full border-2 border-surface-container flex items-center justify-center">
+<span class="text-[8px] text-white">❤️</span>
+</div>
+</div>
+<div>
+<h3 class="font-headline-lg text-headline-lg text-primary">GardenKeeper</h3>
+<p class="text-label-sm text-on-surface-variant">Rating: 1458</p>
+</div>
+</div>
+<div class="flex flex-col items-end">
+<div class="text-display-lg font-display-lg text-primary">07:15</div>
+<div class="text-label-sm text-on-surface-variant font-bold">YOUR TURN</div>
+</div>
+</div>
+</section>
+<!-- Sidebar Right: Move History -->
+<aside class="w-full md:w-72 flex flex-col gap-6">
+<div class="bg-surface-container-high rounded-lg p-6 flex flex-col h-full min-h-[600px] border-b-4 border-outline-variant shadow-sm">
+<h3 class="font-headline-lg text-headline-lg text-secondary mb-4 flex items-center gap-2">
+<span class="material-symbols-outlined">history</span>
+                    History
+                </h3>
+<div class="flex-grow overflow-y-auto space-y-2 pr-2">
+<!-- Move Pairs -->
+<div class="flex items-center gap-2">
+<span class="w-6 text-label-sm text-on-surface-variant">1.</span>
+<div class="flex-grow grid grid-cols-2 gap-2">
+<span class="bg-primary-container text-on-primary-container px-3 py-1 rounded-full text-label-sm font-bold text-center border-b-2 border-primary/20">e4</span>
+<span class="bg-secondary-container text-on-secondary-container px-3 py-1 rounded-full text-label-sm font-bold text-center border-b-2 border-secondary/20">e5</span>
+</div>
+</div>
+<div class="flex items-center gap-2">
+<span class="w-6 text-label-sm text-on-surface-variant">2.</span>
+<div class="flex-grow grid grid-cols-2 gap-2">
+<span class="bg-primary-container text-on-primary-container px-3 py-1 rounded-full text-label-sm font-bold text-center border-b-2 border-primary/20">Nf3</span>
+<span class="bg-secondary-container text-on-secondary-container px-3 py-1 rounded-full text-label-sm font-bold text-center border-b-2 border-secondary/20">Nc6</span>
+</div>
+</div>
+<div class="flex items-center gap-2">
+<span class="w-6 text-label-sm text-on-surface-variant">3.</span>
+<div class="flex-grow grid grid-cols-2 gap-2">
+<span class="bg-primary-container text-on-primary-container px-3 py-1 rounded-full text-label-sm font-bold text-center border-b-2 border-primary/20">Bb5</span>
+<span class="bg-secondary-container text-on-secondary-container px-3 py-1 rounded-full text-label-sm font-bold text-center border-b-2 border-secondary/20">a6</span>
+</div>
+</div>
+<!-- Current move highlighting -->
+<div class="flex items-center gap-2">
+<span class="w-6 text-label-sm text-on-surface-variant">4.</span>
+<div class="flex-grow grid grid-cols-2 gap-2">
+<span class="bg-primary border-2 border-white text-white px-3 py-1 rounded-full text-label-sm font-bold text-center shadow-md scale-105 animate-pulse">Ba4</span>
+<span class="bg-surface-container-highest/50 border-2 border-dashed border-outline-variant px-3 py-1 rounded-full text-label-sm text-on-surface-variant text-center italic">waiting...</span>
+</div>
+</div>
+</div>
+<div class="mt-6 pt-4 border-t border-outline-variant flex justify-between">
+<button class="text-primary p-2 rounded-full hover:bg-primary-container transition-colors">
+<span class="material-symbols-outlined">first_page</span>
+</button>
+<button class="text-primary p-2 rounded-full hover:bg-primary-container transition-colors">
+<span class="material-symbols-outlined">chevron_left</span>
+</button>
+<button class="text-primary p-2 rounded-full hover:bg-primary-container transition-colors">
+<span class="material-symbols-outlined">chevron_right</span>
+</button>
+<button class="text-primary p-2 rounded-full hover:bg-primary-container transition-colors">
+<span class="material-symbols-outlined">last_page</span>
+</button>
+</div>
+</div>
+</aside>
+</main>
+<!-- Footer -->
+<footer class="bg-surface-dim mt-auto py-8">
+<div class="flex flex-col md:flex-row justify-between items-center px-container-padding gap-gutter max-w-7xl mx-auto w-full">
+<div class="flex flex-col gap-2">
+<span class="font-headline-lg text-headline-lg text-primary">Kawaii Chess</span>
+<p class="font-body-md text-body-md text-on-surface-variant">© 2024 Kawaii Chess. Made with love and sparkles! ✨</p>
+</div>
+<div class="flex gap-gutter">
+<a class="text-on-surface-variant font-label-sm text-label-sm hover:text-tertiary hover:underline transition-all" href="#">Support</a>
+<a class="text-on-surface-variant font-label-sm text-label-sm hover:text-tertiary hover:underline transition-all" href="#">Privacy</a>
+<a class="text-on-surface-variant font-label-sm text-label-sm hover:text-tertiary hover:underline transition-all" href="#">Twitter</a>
+<a class="text-on-surface-variant font-label-sm text-label-sm hover:text-tertiary hover:underline transition-all" href="#">Discord</a>
+</div>
+</div>
+</footer>
+<script>
+        // Micro-interaction for tiles
+        document.querySelectorAll('.chess-tile-inner').forEach(tile => {
+            tile.addEventListener('click', () => {
+                tile.style.backgroundColor = 'rgba(127, 79, 107, 0.1)';
+                setTimeout(() => {
+                    tile.style.backgroundColor = '';
+                }, 300);
+            });
+        });
+    </script>
+</body></html>

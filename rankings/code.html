@@ -1,0 +1,366 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@700;800&family=Quicksand:wght@500;700&family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@100..900&family=Quicksand:wght@100..900&display=swap" rel="stylesheet"/>
+<style>
+    .material-symbols-outlined {
+      font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 48;
+    }
+    .kawaii-shadow {
+      box-shadow: 0 8px 24px rgba(127, 79, 107, 0.12);
+    }
+    .kawaii-button-press {
+      transition: all 0.15s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    .kawaii-button-press:active {
+      transform: translateY(4px);
+      box-shadow: none !important;
+    }
+    .inner-recess {
+      box-shadow: inset 0 2px 8px rgba(0, 0, 0, 0.05);
+    }
+    .sparkle-bg {
+      background-image: radial-gradient(circle, #ffd8eb 1px, transparent 1px);
+      background-size: 20px 20px;
+    }
+    @keyframes float {
+      0% { transform: translateY(0px); }
+      50% { transform: translateY(-10px); }
+      100% { transform: translateY(0px); }
+    }
+    .animate-float {
+      animation: float 3s ease-in-out infinite;
+    }
+  </style>
+<script id="tailwind-config">
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          "colors": {
+                  "surface-tint": "#7f4f6b",
+                  "tertiary-container": "#8ce3d0",
+                  "tertiary": "#006b5c",
+                  "on-secondary-fixed-variant": "#4a3a89",
+                  "outline": "#817379",
+                  "surface": "#fef8f4",
+                  "secondary-fixed": "#e7deff",
+                  "on-primary-fixed": "#330d26",
+                  "surface-variant": "#e7e1de",
+                  "outline-variant": "#d3c2c9",
+                  "on-secondary-fixed": "#1d035d",
+                  "primary-fixed": "#ffd8eb",
+                  "surface-container-lowest": "#ffffff",
+                  "secondary-fixed-dim": "#cbbeff",
+                  "surface-container": "#f3ede9",
+                  "surface-bright": "#fef8f4",
+                  "secondary-container": "#b8a7ff",
+                  "on-secondary-container": "#483888",
+                  "secondary": "#6252a3",
+                  "background": "#fef8f4",
+                  "primary-fixed-dim": "#f1b5d5",
+                  "on-error-container": "#93000a",
+                  "inverse-on-surface": "#f5f0ec",
+                  "surface-container-high": "#ede7e3",
+                  "error-container": "#ffdad6",
+                  "surface-container-highest": "#e7e1de",
+                  "surface-dim": "#ded9d5",
+                  "on-tertiary-container": "#006759",
+                  "tertiary-fixed": "#9bf3df",
+                  "on-tertiary-fixed": "#00201b",
+                  "on-primary-fixed-variant": "#653853",
+                  "primary": "#7f4f6b",
+                  "on-surface": "#1d1b19",
+                  "error": "#ba1a1a",
+                  "inverse-primary": "#f1b5d5",
+                  "on-primary": "#ffffff",
+                  "on-primary-container": "#7b4c67",
+                  "inverse-surface": "#32302e",
+                  "primary-container": "#ffc2e2",
+                  "surface-container-low": "#f8f2ef",
+                  "on-tertiary": "#ffffff",
+                  "on-surface-variant": "#4f4449",
+                  "on-error": "#ffffff",
+                  "tertiary-fixed-dim": "#7fd6c3",
+                  "on-background": "#1d1b19",
+                  "on-secondary": "#ffffff",
+                  "on-tertiary-fixed-variant": "#005045"
+          },
+          "borderRadius": {
+                  "DEFAULT": "1rem",
+                  "lg": "2rem",
+                  "xl": "3rem",
+                  "full": "9999px"
+          },
+          "spacing": {
+                  "container-padding": "24px",
+                  "unit": "8px",
+                  "chess-tile-gap": "2px",
+                  "gutter": "16px"
+          },
+          "fontFamily": {
+                  "body-md": ["Quicksand"],
+                  "display-lg": ["Plus Jakarta Sans"],
+                  "headline-lg": ["Plus Jakarta Sans"],
+                  "headline-lg-mobile": ["Plus Jakarta Sans"],
+                  "label-sm": ["Quicksand"]
+          },
+          "fontSize": {
+                  "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "500"}],
+                  "display-lg": ["48px", {"lineHeight": "56px", "letterSpacing": "-0.02em", "fontWeight": "800"}],
+                  "headline-lg": ["32px", {"lineHeight": "40px", "fontWeight": "700"}],
+                  "headline-lg-mobile": ["24px", {"lineHeight": "32px", "fontWeight": "700"}],
+                  "label-sm": ["12px", {"lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "700"}]
+          }
+        },
+      },
+    }
+  </script>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background text-on-surface font-body-md overflow-x-hidden min-h-screen pb-32">
+<!-- Top App Bar -->
+<header class="bg-surface w-full top-0 px-container-padding pt-4 z-40 fixed">
+<div class="flex justify-between items-center w-full px-6 py-4 shadow-[0_8px_24px_rgba(127,79,107,0.12)] bg-surface rounded-xl">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-full border-4 border-primary-container overflow-hidden">
+<img class="w-full h-full object-cover" data-alt="A cute, chubby anime-style pastel mascot profile picture. The character is a round white cat wearing a small pink crown, set against a soft lavender background with small sparkling star elements. High-quality digital illustration with soft cel shading and a whimsical, playful vibe." src="https://lh3.googleusercontent.com/aida-public/AB6AXuABCOsXnCp9Vapa8OADe3boH1U00sWLMmEXxTuQvsm4YQ7mmFhX9H1yy0-xNATAjUBdkmn8fzpGwZs4jaWN8vxV7cqRhBrqP6Ap6qkbVnR_OQnd6hESL-edCasjKGTfM4uuQpRTCTBgt9Llwys6OrJGXnhhy9rqgUcaI8Vff9MiDObDEsy4Jb57nt3231Zpg3_KfiVBVVeP7qpZmc7gR5u92ccm2NuBxKDupRoAR-0NFAx-KzLP9UGrsE-LgCgEG27zBWGW_NQ9sRY"/>
+</div>
+<h1 class="font-headline-lg-mobile text-headline-lg-mobile font-bold text-primary">Kawaii Chess</h1>
+</div>
+<button class="material-symbols-outlined text-on-surface-variant hover:scale-105 transition-transform duration-200 active:translate-y-[2px]" data-icon="settings">settings</button>
+</div>
+</header>
+<main class="pt-28 px-container-padding max-w-4xl mx-auto sparkle-bg min-h-screen">
+<!-- Tab Navigation -->
+<div class="flex justify-center mb-8 gap-4">
+<nav class="flex p-2 bg-surface-container rounded-full inner-recess">
+<button class="px-8 py-2 rounded-full font-label-sm text-label-sm text-on-primary-container bg-primary-container shadow-[0_4px_0_rgba(123,76,103,0.3)] transition-all">Global</button>
+<button class="px-8 py-2 rounded-full font-label-sm text-label-sm text-on-surface-variant hover:text-primary transition-all">Friends</button>
+<button class="px-8 py-2 rounded-full font-label-sm text-label-sm text-on-surface-variant hover:text-primary transition-all">Monthly</button>
+</nav>
+</div>
+<!-- Top 3 Podium -->
+<div class="grid grid-cols-3 gap-4 items-end mb-12">
+<!-- Silver -->
+<div class="flex flex-col items-center">
+<div class="relative mb-2">
+<span class="material-symbols-outlined absolute -top-4 -right-2 text-slate-400 drop-shadow-sm rotate-12" style="font-size: 32px;">military_tech</span>
+<div class="w-20 h-20 rounded-full border-4 border-secondary-container bg-surface overflow-hidden shadow-lg">
+<img class="w-full h-full object-cover" data-alt="A cute anime avatar of a bunny wearing a blue bowtie, styled in a soft pastel aesthetic. The background is a pale teal with soft white clouds. The character has large expressive eyes and a friendly, kawaii expression. High-end character design for a mobile game profile." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDQ6YhDeBLn99JdpBpGHzqetr-uHt9ExByl5ciIo12wznOI9mvyut1IHA0-1MCQEQc_lRPqJlVwwWpyBqXQ5rWHWL5d3uoTMsALM5Fhja-fmHum73SzFs5hiQIp2FODoYpBCtxP6pQUjIqIXosXq2cdRV_nbkBbhfaLrRRuxGPe-tw5J6zfCAz-QGofWNalythoaCD4j5rc2i9eBDRUHEjQiZ72UfZUr-YxccOs4KMqS_yv94cKxEG-OlNdYq38NVxi-JS-F5e6IeE"/>
+</div>
+</div>
+<div class="bg-surface-container-high w-full rounded-t-xl p-4 text-center shadow-md border-b-4 border-outline-variant h-24">
+<p class="font-label-sm text-label-sm text-on-surface truncate">BunnyHop</p>
+<p class="font-headline-lg-mobile text-primary">2450</p>
+<span class="text-[10px] font-bold text-outline uppercase tracking-wider">#2 Rank</span>
+</div>
+</div>
+<!-- Gold (Center) -->
+<div class="flex flex-col items-center">
+<div class="relative mb-3 animate-float">
+<span class="material-symbols-outlined absolute -top-6 -right-3 text-yellow-500 drop-shadow-md z-10" style="font-size: 48px; font-variation-settings: 'FILL' 1;">military_tech</span>
+<div class="w-28 h-28 rounded-full border-[6px] border-primary-container bg-surface overflow-hidden shadow-xl">
+<img class="w-full h-full object-cover" data-alt="A high-quality 3D rendered avatar of a cute panda character in a kawaii style, holding a tiny chess piece. The character has soft, fuzzy fur textures and a warm, glowing rim light. The background is a soft pink dreamscape with tiny floating hearts. Professional UI asset." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAQ9H3gAwSeUwqmZAyYGEfvhKgMAk5ytirEOdte09Kqn0Dypuccim3du8OMXQfCJaKe4RzOkKWOKOwCtRdhqfc4_wNG72RBOVvfw-e1057jfxUeqDIR55xKKRRbX5S44i82bywagncI6wcBvT84-95RDRtiDMzIzr2YVj_mqXRRi_no3KSmNdFyXYOSysNh1qeHq376N3Sw0EhBm9wx0SMdBYd3bgLEuWJqeiMcc64dX5qo66wWM5bk-kplMmiEVny3dTa9-ogX294"/>
+</div>
+</div>
+<div class="bg-primary-container w-full rounded-t-2xl p-6 text-center shadow-[0_8px_0_#7b4c6720] border-b-4 border-primary h-36">
+<p class="font-label-sm text-label-sm text-on-primary-container font-bold truncate">ChessQueen_99</p>
+<p class="font-headline-lg text-primary">2890</p>
+<span class="text-[12px] font-bold text-on-primary-container uppercase tracking-widest">#1 Rank</span>
+</div>
+</div>
+<!-- Bronze -->
+<div class="flex flex-col items-center">
+<div class="relative mb-2">
+<span class="material-symbols-outlined absolute -top-4 -right-2 text-orange-600 drop-shadow-sm -rotate-12" style="font-size: 32px;">military_tech</span>
+<div class="w-20 h-20 rounded-full border-4 border-tertiary-container bg-surface overflow-hidden shadow-lg">
+<img class="w-full h-full object-cover" data-alt="A charming anime-style avatar of a small Shiba Inu dog wearing a detective hat, designed with soft round lines and pastel colors. The background is a bright lemon yellow with white polka dots. The character looks determined and playful. Modern kawaii aesthetic." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBT-1smgsw6EYOMujjxiq433vH3mni9cVhMYxGiZBytfmkuGv8tfWhGqZv3RLVtTpnP66kv7yeNSjqkpWYzaLl8TnPpLOROFCjtmtD7qyMK6jOV0eMed5BbKGN0Vpeey451XHsiteJd-0Ol20IpiNt6s1wUemhYzbaoi3UlJ2Vu7XRrWh738PImV0VdFvGi26WsRkte8_iH3lbYpRrg6Arh7KLOFPe94zsEQZewKS2W9XBGT9rVkMngZ-FQ2dHBYNO_jh7aKU57QrA"/>
+</div>
+</div>
+<div class="bg-surface-container-high w-full rounded-t-xl p-4 text-center shadow-md border-b-4 border-outline-variant h-24">
+<p class="font-label-sm text-label-sm text-on-surface truncate">ShibaMate</p>
+<p class="font-headline-lg-mobile text-primary">2120</p>
+<span class="text-[10px] font-bold text-outline uppercase tracking-wider">#3 Rank</span>
+</div>
+</div>
+</div>
+<!-- Leaderboard List -->
+<div class="space-y-4 mb-16">
+<!-- Row 4 -->
+<div class="flex items-center gap-4 bg-surface p-4 rounded-xl shadow-sm hover:scale-[1.02] transition-transform duration-200 border-b-4 border-surface-container">
+<span class="w-8 font-bold text-outline">4</span>
+<div class="w-12 h-12 rounded-full bg-secondary-fixed overflow-hidden flex-shrink-0">
+<img class="w-full h-full object-cover" data-alt="Cute marshmallow character with tiny arms and legs, wearing a green scarf. Kawaii vector art style with soft gradients and pastel mint background." src="https://lh3.googleusercontent.com/aida-public/AB6AXuC3vYTLX15XlT1KtvX70DGdKrlWZuPzeyZ2QuQbM67hSKDNUiKxIZiIfZhopAM3afhUh6og6k6MGHOz0MXneb50SMuZMofUBJTe5DESSpO8tlJLD4bw9ivkY8RzBvK3bPPLBl_BQEMjQbqXKmaAuqvOXp29HW3f3GTJLliyuVduFYJjlx6ImZR-y0yHKgD0opR545ArjZnLJR7WpIiuFchDvrcd_zl8r5Onqt15GsozMFawvKaXCtHmqdDnxLu1loDyBu-8jnZJ1vk"/>
+</div>
+<div class="flex-grow">
+<h3 class="font-bold text-on-surface">MallowPuff</h3>
+<span class="text-[10px] text-outline uppercase tracking-tighter">Grandmaster</span>
+</div>
+<div class="text-right">
+<p class="font-bold text-primary">1980</p>
+<p class="text-[10px] text-tertiary font-bold">ELO</p>
+</div>
+</div>
+<!-- Row 5 -->
+<div class="flex items-center gap-4 bg-surface p-4 rounded-xl shadow-sm hover:scale-[1.02] transition-transform duration-200 border-b-4 border-surface-container">
+<span class="w-8 font-bold text-outline">5</span>
+<div class="w-12 h-12 rounded-full bg-primary-fixed overflow-hidden flex-shrink-0">
+<img class="w-full h-full object-cover" data-alt="Sweet strawberry character with a smiley face, anime style. Bright red and soft pink colors, minimal kawaii aesthetic on a white background." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDtjlAluYr5ahK_wx-2DxrvK9DJq17xvBeUe8sYZX_QdA8gTycdUY4gVLe7s1hFk8TABfueEBRxPxZkWlFMMQH6UnvlKJrOsqE6MPK14KK-M1NffEOPGWeh8pPjhRvOOfF7yW9QVny8YOLsWWBA7pyOI3J61VTRcT6uUpt31l0QgBcN55KVAg1Z8cibnw_3Zwm1w8N4CAZV5fijyiannOI_KhJ9UquYDnj4YogRA9nJLphxBr9fvTzxr-wDpYuyiwWeY3_TZcnwptE"/>
+</div>
+<div class="flex-grow">
+<h3 class="font-bold text-on-surface">BerryCheck</h3>
+<span class="text-[10px] text-outline uppercase tracking-tighter">Master</span>
+</div>
+<div class="text-right">
+<p class="font-bold text-primary">1850</p>
+<p class="text-[10px] text-tertiary font-bold">ELO</p>
+</div>
+</div>
+<!-- Row 6 -->
+<div class="flex items-center gap-4 bg-surface p-4 rounded-xl shadow-sm hover:scale-[1.02] transition-transform duration-200 border-b-4 border-surface-container">
+<span class="w-8 font-bold text-outline">6</span>
+<div class="w-12 h-12 rounded-full bg-tertiary-fixed overflow-hidden flex-shrink-0">
+<img class="w-full h-full object-cover" data-alt="Playful little ghost wearing a party hat, translucent and cute. Soft blue and purple palette, kawaii gaming avatar." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAiQQg5v-T5r1q2fFlXDotF4cVSKgX-9z8t4TdHAgemIJ_sOSmFScXjM-NWCuvWIEkV5p9cLo1DJH96vPFBMf9Vy5Nffggqp2YcuHNJhWIbz38tRJykqXrIyE4QX_gCHZ5xWSikyWOBXFl38zFYXq2Q4Ylyccb_p6WfvyVlWvexZToNmFpSCDbRL-vbIhPsH4F2VE8OosPInbVFXRLmkUU0I8yOI2FXDRstWRO2nv_54IC8YlFSL19sWE07UxOjLtv331jDwfPh-FE"/>
+</div>
+<div class="flex-grow">
+<h3 class="font-bold text-on-surface">BooBlitz</h3>
+<span class="text-[10px] text-outline uppercase tracking-tighter">Diamond</span>
+</div>
+<div class="text-right">
+<p class="font-bold text-primary">1720</p>
+<p class="text-[10px] text-tertiary font-bold">ELO</p>
+</div>
+</div>
+<!-- Row 7 -->
+<div class="flex items-center gap-4 bg-surface p-4 rounded-xl shadow-sm hover:scale-[1.02] transition-transform duration-200 border-b-4 border-surface-container">
+<span class="w-8 font-bold text-outline">7</span>
+<div class="w-12 h-12 rounded-full bg-secondary-container overflow-hidden flex-shrink-0">
+<img class="w-full h-full object-cover" data-alt="Cute sleepy koala hugging a chess pawn, soft grey and pastel purple illustration. Kawaii mascot style." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCLHdMe7Q2VTSLtIDkj_LyXlaYvgjcoEJzd415NkeCl2AVU0glGz8vFQbDSfS9jUO8qnxKKcpsIpx4RazEC05ajvZqdIL6MhjH9xMzTFy3ErekT7MGdbftrbL_q6EIGOtvHqLrPVULFJ0aq7Ud4UistzJxu597S2jEzjBd3PxcJ0evPcWgED5O1ntnAM7ZPIdwutAa39xxf_8CULS7x61j9ITgW8x3eR2aUyjmMsRTvR3Fs8GAJhn34P7F9kmj0SpQIMXINsax9MPY"/>
+</div>
+<div class="flex-grow">
+<h3 class="font-bold text-on-surface">KoalaKing</h3>
+<span class="text-[10px] text-outline uppercase tracking-tighter">Platinum</span>
+</div>
+<div class="text-right">
+<p class="font-bold text-primary">1640</p>
+<p class="text-[10px] text-tertiary font-bold">ELO</p>
+</div>
+</div>
+</div>
+</main>
+<!-- User Rank Persistent Bar -->
+<div class="fixed bottom-24 left-0 w-full px-container-padding z-40">
+<div class="max-w-4xl mx-auto">
+<div class="bg-primary-container p-4 rounded-2xl shadow-lg border-4 border-on-primary-container flex items-center gap-4 kawaii-shadow">
+<span class="w-8 font-bold text-on-primary-container">42</span>
+<div class="w-12 h-12 rounded-full border-2 border-on-primary-container overflow-hidden flex-shrink-0 bg-white">
+<img class="w-full h-full object-cover" data-alt="A cute anime mascot profile. A round white cat wearing a small pink crown, set against a soft lavender background. Playful and charming profile image." src="https://lh3.googleusercontent.com/aida-public/AB6AXuC1qoZAzzFyVRrzV4uDZ3NlvoZa6SWvkS_v2Sarb_ijuItrbvzXXJGkndogBSYpNtgSCBGzv4o3ulG3reir7IyYfX1TWbHGZhtJZ3lwD1maAPw0GtASxXDgfQV3DxdLWnDF5jpDtX3j-Fq1waUJYM2c8RLPFiEM9idI2frrf-vD0Ip2_YQYucpCoharHOSBdZs_1Oli34ncp83whqr0UimKwsq2BT6wBypjcCtvW4D9hOLTXxuGWfM6IDzWnpcyYkCnUjMsY_Zv2fY"/>
+</div>
+<div class="flex-grow">
+<h3 class="font-bold text-on-primary-container flex items-center gap-1">
+            You
+            <span class="material-symbols-outlined text-sm" style="font-variation-settings: 'FILL' 1;">favorite</span>
+</h3>
+<span class="text-[10px] text-on-primary-container opacity-80 uppercase tracking-tighter">Rising Star</span>
+</div>
+<div class="text-right">
+<p class="font-bold text-on-primary-container">1240</p>
+<div class="flex items-center gap-1 text-[10px] text-on-primary-container font-bold bg-white/20 px-2 py-0.5 rounded-full">
+<span class="material-symbols-outlined text-[12px]">trending_up</span>
+            +15
+          </div>
+</div>
+</div>
+</div>
+</div>
+<!-- Bottom Navigation Bar -->
+<nav class="fixed bottom-0 left-0 w-full z-50 flex justify-around items-center px-4 pb-6 pt-3 bg-surface-container dark:bg-surface-container-highest shadow-[0_-8px_24px_rgba(127,79,107,0.1)] rounded-t-lg">
+<button class="flex flex-col items-center justify-center text-on-surface-variant dark:text-outline-variant px-4 py-1 hover:bg-primary-fixed transition-all active:translate-y-[2px]">
+<span class="material-symbols-outlined" data-icon="sports_esports">sports_esports</span>
+<span class="font-label-sm text-label-sm">Play</span>
+</button>
+<button class="flex flex-col items-center justify-center text-on-surface-variant dark:text-outline-variant px-4 py-1 hover:bg-primary-fixed transition-all active:translate-y-[2px]">
+<span class="material-symbols-outlined" data-icon="school">school</span>
+<span class="font-label-sm text-label-sm">Tutorial</span>
+</button>
+<button class="flex flex-col items-center justify-center bg-primary-container dark:bg-primary text-on-primary-container dark:text-on-primary rounded-xl px-4 py-1 shadow-[0_4px_0_rgba(123,76,103,1)] transition-all active:translate-y-[2px] active:shadow-none">
+<span class="material-symbols-outlined" data-icon="leaderboard" style="font-variation-settings: 'FILL' 1;">leaderboard</span>
+<span class="font-label-sm text-label-sm">Ranks</span>
+</button>
+<button class="flex flex-col items-center justify-center text-on-surface-variant dark:text-outline-variant px-4 py-1 hover:bg-primary-fixed transition-all active:translate-y-[2px]">
+<span class="material-symbols-outlined" data-icon="military_tech">military_tech</span>
+<span class="font-label-sm text-label-sm">Badges</span>
+</button>
+<button class="flex flex-col items-center justify-center text-on-surface-variant dark:text-outline-variant px-4 py-1 hover:bg-primary-fixed transition-all active:translate-y-[2px]">
+<span class="material-symbols-outlined" data-icon="person">person</span>
+<span class="font-label-sm text-label-sm">Profile</span>
+</button>
+</nav>
+<script>
+    // Tab switching logic
+    const tabs = document.querySelectorAll('nav button');
+    tabs.forEach(tab => {
+      tab.addEventListener('click', () => {
+        tabs.forEach(t => {
+          t.classList.remove('bg-primary-container', 'text-on-primary-container', 'shadow-[0_4px_0_rgba(123,76,103,0.3)]');
+          t.classList.add('text-on-surface-variant');
+        });
+        tab.classList.add('bg-primary-container', 'text-on-primary-container', 'shadow-[0_4px_0_rgba(123,76,103,0.3)]');
+        tab.classList.remove('text-on-surface-variant');
+      });
+    });
+
+    // Particle effect on leaderboard item click
+    const rows = document.querySelectorAll('.leaderboard-row');
+    rows.forEach(row => {
+      row.addEventListener('click', (e) => {
+        const rect = row.getBoundingClientRect();
+        createParticles(e.clientX, e.clientY);
+      });
+    });
+
+    function createParticles(x, y) {
+      for (let i = 0; i < 5; i++) {
+        const particle = document.createElement('div');
+        particle.style.position = 'fixed';
+        particle.style.left = x + 'px';
+        particle.style.top = y + 'px';
+        particle.style.width = '10px';
+        particle.style.height = '10px';
+        particle.style.backgroundColor = '#ffd8eb';
+        particle.style.borderRadius = '50%';
+        particle.style.pointerEvents = 'none';
+        particle.style.zIndex = '100';
+        document.body.appendChild(particle);
+
+        const angle = Math.random() * Math.PI * 2;
+        const velocity = 2 + Math.random() * 4;
+        const vx = Math.cos(angle) * velocity;
+        const vy = Math.sin(angle) * velocity;
+        
+        let opacity = 1;
+        const animate = () => {
+          opacity -= 0.05;
+          if (opacity <= 0) {
+            particle.remove();
+            return;
+          }
+          particle.style.opacity = opacity;
+          particle.style.transform = `translate(${vx * (1 - opacity) * 20}px, ${vy * (1 - opacity) * 20}px)`;
+          requestAnimationFrame(animate);
+        };
+        animate();
+      }
+    }
+  </script>
+</body></html>
