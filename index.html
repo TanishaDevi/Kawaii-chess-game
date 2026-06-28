@@ -1012,3 +1012,265 @@
         });
     </script>
 </body></html>
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Level Up! - Kawaii Chess</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@700;800&amp;family=Quicksand:wght@500;700&amp;family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@100..900&amp;family=Quicksand:wght@100..900&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "error": "#ba1a1a",
+                    "primary": "#7f4f6b",
+                    "on-tertiary-container": "#006759",
+                    "surface-bright": "#fef8f4",
+                    "on-primary-fixed-variant": "#653853",
+                    "secondary": "#6252a3",
+                    "on-surface": "#1d1b19",
+                    "surface-variant": "#e7e1de",
+                    "tertiary-fixed": "#9bf3df",
+                    "outline": "#817379",
+                    "secondary-container": "#b8a7ff",
+                    "tertiary-container": "#8ce3d0",
+                    "secondary-fixed-dim": "#cbbeff",
+                    "on-tertiary": "#ffffff",
+                    "surface-container-lowest": "#ffffff",
+                    "primary-container": "#ffc2e2",
+                    "surface-dim": "#ded9d5",
+                    "surface-container": "#f3ede9",
+                    "on-primary-fixed": "#330d26",
+                    "surface-container-high": "#ede7e3",
+                    "on-error-container": "#93000a",
+                    "error-container": "#ffdad6",
+                    "tertiary": "#006b5c",
+                    "primary-fixed": "#ffd8eb",
+                    "background": "#fef8f4",
+                    "secondary-fixed": "#e7deff",
+                    "on-background": "#1d1b19",
+                    "tertiary-fixed-dim": "#7fd6c3",
+                    "on-tertiary-fixed-variant": "#005045",
+                    "surface-container-low": "#f8f2ef",
+                    "outline-variant": "#d3c2c9",
+                    "on-secondary-container": "#483888",
+                    "on-primary": "#ffffff",
+                    "surface-container-highest": "#e7e1de",
+                    "inverse-surface": "#32302e",
+                    "inverse-primary": "#f1b5d5",
+                    "primary-fixed-dim": "#f1b5d5",
+                    "on-primary-container": "#7b4c67",
+                    "inverse-on-surface": "#f5f0ec",
+                    "on-secondary-fixed-variant": "#4a3a89",
+                    "on-secondary": "#ffffff",
+                    "on-error": "#ffffff",
+                    "on-tertiary-fixed": "#00201b",
+                    "surface-tint": "#7f4f6b",
+                    "on-surface-variant": "#4f4449",
+                    "on-secondary-fixed": "#1d035d",
+                    "surface": "#fef8f4"
+            },
+            "borderRadius": {
+                    "DEFAULT": "1rem",
+                    "lg": "2rem",
+                    "xl": "3rem",
+                    "full": "9999px"
+            },
+            "spacing": {
+                    "unit": "8px",
+                    "chess-tile-gap": "2px",
+                    "gutter": "16px",
+                    "container-padding": "24px"
+            },
+            "fontFamily": {
+                    "headline-lg": ["Plus Jakarta Sans"],
+                    "label-sm": ["Quicksand"],
+                    "headline-lg-mobile": ["Plus Jakarta Sans"],
+                    "display-lg": ["Plus Jakarta Sans"],
+                    "body-md": ["Quicksand"]
+            },
+            "fontSize": {
+                    "headline-lg": ["32px", {"lineHeight": "40px", "fontWeight": "700"}],
+                    "label-sm": ["12px", {"lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "700"}],
+                    "headline-lg-mobile": ["24px", {"lineHeight": "32px", "fontWeight": "700"}],
+                    "display-lg": ["48px", {"lineHeight": "56px", "letterSpacing": "-0.02em", "fontWeight": "800"}],
+                    "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "500"}]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        @keyframes float {
+            0%, 100% { transform: translateY(0) rotate(0deg); }
+            50% { transform: translateY(-20px) rotate(2deg); }
+        }
+        @keyframes sparkle {
+            0%, 100% { opacity: 0; transform: scale(0); }
+            50% { opacity: 1; transform: scale(1.2); }
+        }
+        .animate-float { animation: float 4s ease-in-out infinite; }
+        .sparkle { position: absolute; width: 10px; height: 10px; background: #ffd8eb; border-radius: 50%; animation: sparkle 2s infinite; }
+        
+        .kawaii-button {
+            box-shadow: 0 4px 0 #653853;
+            transition: all 0.1s ease;
+        }
+        .kawaii-button:active {
+            transform: translateY(2px);
+            box-shadow: 0 2px 0 #653853;
+        }
+        
+        .confetti {
+            position: absolute;
+            width: 10px;
+            height: 10px;
+            top: -10px;
+            z-index: 0;
+            animation: confettiFall linear forwards;
+        }
+        @keyframes confettiFall {
+            to { transform: translateY(100vh) rotate(720deg); }
+        }
+
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 1, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+    </style>
+</head>
+<body class="bg-surface text-on-surface font-body-md min-h-screen flex flex-col overflow-x-hidden">
+<!-- Top Navigation (JSON Shared Component) -->
+<nav class="bg-surface-container-low dark:bg-surface-container-highest font-headline-lg text-headline-lg text-primary full-width top-0 sticky z-50 shadow-[0_8px_32px_rgba(127,79,107,0.1)]">
+<div class="flex justify-between items-center px-container-padding py-4 max-w-7xl mx-auto w-full">
+<div class="font-display-lg text-display-lg text-primary drop-shadow-[0_2px_0_rgba(127,79,107,0.2)]">
+                Kawaii Chess
+            </div>
+<div class="hidden md:flex items-center gap-8">
+<a class="text-on-surface-variant font-label-sm hover:text-primary transition-all duration-200" href="#">Play</a>
+<a class="text-on-surface-variant font-label-sm hover:text-primary transition-all duration-200" href="#">Tutorials</a>
+<a class="text-on-surface-variant font-label-sm hover:text-primary transition-all duration-200" href="#">Rankings</a>
+</div>
+<div class="flex items-center gap-4">
+<button class="bg-primary-container text-on-primary-container px-6 py-2 rounded-full font-label-sm kawaii-button">Profile</button>
+</div>
+</div>
+</nav>
+<!-- Main Content Canvas -->
+<main class="flex-grow flex items-center justify-center relative overflow-hidden px-container-padding py-12">
+<!-- Background Elements -->
+<div class="absolute inset-0 pointer-events-none" id="confetti-container"></div>
+<div class="max-w-6xl w-full flex flex-col lg:flex-row items-center gap-12 z-10">
+<!-- Left Side: Mascot & Celebration -->
+<div class="flex-1 text-center lg:text-left">
+<div class="relative inline-block mb-8">
+<!-- Sparkles decoration -->
+<div class="sparkle" style="top:-10%; left:20%; animation-delay: 0.2s"></div>
+<div class="sparkle" style="top:20%; right:-10%; animation-delay: 0.5s"></div>
+<div class="sparkle" style="bottom:10%; left:-5%; animation-delay: 0.8s"></div>
+<div class="w-64 h-64 md:w-80 md:h-80 rounded-full bg-primary-container flex items-center justify-center p-8 animate-float shadow-2xl">
+<img alt="Joyful Mascot" class="w-full h-full object-contain" src="https://www.gstatic.com/labs-code/stitch/stitch-placeholder-300x300.svg"/>
+</div>
+</div>
+<h1 class="font-display-lg text-display-lg text-primary mb-2 drop-shadow-sm">LEVEL 5!</h1>
+<p class="text-secondary font-headline-lg mb-8">You're becoming a Grandmaster of Cute!</p>
+</div>
+<!-- Right Side: Rewards Grid -->
+<div class="flex-1 w-full">
+<div class="bg-white/80 backdrop-blur-md rounded-xl p-8 border-4 border-primary-fixed shadow-2xl">
+<h2 class="font-headline-lg text-headline-lg text-on-surface mb-6 text-center lg:text-left">Unlocked Rewards</h2>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-10">
+<!-- Reward 1 -->
+<div class="bg-surface-container rounded-lg p-6 flex flex-col items-center text-center shadow-inner group hover:scale-105 transition-transform cursor-default border-2 border-transparent hover:border-primary-container">
+<div class="w-16 h-16 bg-secondary-container rounded-full flex items-center justify-center mb-4 text-on-secondary-container">
+<span class="material-symbols-outlined !text-4xl">chess</span>
+</div>
+<span class="font-label-sm text-label-sm text-secondary uppercase tracking-widest mb-1">Skin</span>
+<h3 class="font-headline-lg text-[18px] text-on-surface">Chibi Rook Skin</h3>
+</div>
+<!-- Reward 2 -->
+<div class="bg-surface-container rounded-lg p-6 flex flex-col items-center text-center shadow-inner group hover:scale-105 transition-transform cursor-default border-2 border-transparent hover:border-tertiary-container">
+<div class="w-16 h-16 bg-tertiary-container rounded-full flex items-center justify-center mb-4 text-on-tertiary-container">
+<span class="material-symbols-outlined !text-4xl" style="font-variation-settings: 'FILL' 1;">payments</span>
+</div>
+<span class="font-label-sm text-label-sm text-tertiary uppercase tracking-widest mb-1">Currency</span>
+<h3 class="font-headline-lg text-[18px] text-on-surface">1,000 Coins</h3>
+</div>
+<!-- Reward 3 -->
+<div class="bg-surface-container rounded-lg p-6 flex flex-col items-center text-center shadow-inner group hover:scale-105 transition-transform cursor-default border-2 border-transparent hover:border-primary-container">
+<div class="w-16 h-16 bg-primary-fixed rounded-full flex items-center justify-center mb-4 text-on-primary-fixed">
+<span class="material-symbols-outlined !text-4xl">potted_plant</span>
+</div>
+<span class="font-label-sm text-label-sm text-primary uppercase tracking-widest mb-1">Board</span>
+<h3 class="font-headline-lg text-[18px] text-on-surface">Garden Theme</h3>
+</div>
+</div>
+<div class="flex flex-col sm:flex-row justify-center gap-4">
+<button class="bg-primary text-on-primary px-12 py-4 rounded-full font-headline-lg text-headline-lg-mobile kawaii-button w-full sm:w-auto">
+                            Awesome!
+                        </button>
+</div>
+</div>
+</div>
+</div>
+</main>
+<!-- Footer (JSON Shared Component) -->
+<footer class="bg-surface-dim dark:bg-surface-container-lowest py-8 mt-auto w-full">
+<div class="flex flex-col md:flex-row justify-between items-center px-container-padding gap-gutter w-full max-w-7xl mx-auto">
+<div class="font-headline-lg text-headline-lg text-primary">Kawaii Chess</div>
+<div class="flex gap-6 mt-4 md:mt-0">
+<a class="text-on-surface-variant font-label-sm hover:text-tertiary hover:underline transition-all" href="#">Support</a>
+<a class="text-on-surface-variant font-label-sm hover:text-tertiary hover:underline transition-all" href="#">Privacy</a>
+<a class="text-on-surface-variant font-label-sm hover:text-tertiary hover:underline transition-all" href="#">Terms</a>
+<a class="text-on-surface-variant font-label-sm hover:text-tertiary hover:underline transition-all" href="#">Discord</a>
+</div>
+<div class="mt-4 md:mt-0 text-on-surface-variant font-body-md text-body-md text-center md:text-right">
+                © 2024 Kawaii Chess. Made with love and sparkles! ✨
+            </div>
+</div>
+</footer>
+<script>
+        // Confetti Creation
+        function createConfetti() {
+            const container = document.getElementById('confetti-container');
+            const colors = ['#7f4f6b', '#6252a3', '#006b5c', '#ffc2e2', '#ffd8eb'];
+            
+            for (let i = 0; i < 100; i++) {
+                const confetti = document.createElement('div');
+                confetti.className = 'confetti';
+                confetti.style.left = Math.random() * 100 + 'vw';
+                confetti.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+                confetti.style.animationDuration = (Math.random() * 3 + 2) + 's';
+                confetti.style.animationDelay = (Math.random() * 2) + 's';
+                confetti.style.opacity = Math.random();
+                container.appendChild(confetti);
+                
+                // Remove confetti after animation finishes
+                confetti.addEventListener('animationend', () => confetti.remove());
+            }
+        }
+
+        // Initialize sparkles and confetti
+        window.onload = () => {
+            createConfetti();
+            // Periodically add more confetti
+            setInterval(createConfetti, 4000);
+        };
+
+        // Micro-interaction: button click effect
+        const mainBtn = document.querySelector('.kawaii-button');
+        if(mainBtn) {
+            mainBtn.addEventListener('click', () => {
+                mainBtn.style.transform = 'scale(0.95)';
+                setTimeout(() => {
+                    mainBtn.style.transform = '';
+                }, 100);
+            });
+        }
+    </script>
+</body></html>
