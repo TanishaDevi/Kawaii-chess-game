@@ -1274,3 +1274,50 @@
         }
     </script>
 </body></html>
+
+    });
+
+    // Particle effect on leaderboard item click
+    const rows = document.querySelectorAll('.leaderboard-row');
+    rows.forEach(row => {
+      row.addEventListener('click', (e) => {
+        const rect = row.getBoundingClientRect();
+        createParticles(e.clientX, e.clientY);
+      });
+    });
+
+    function createParticles(x, y) {
+      for (let i = 0; i < 5; i++) {
+        const particle = document.createElement('div');
+        particle.style.position = 'fixed';
+        particle.style.left = x + 'px';
+        particle.style.top = y + 'px';
+        particle.style.width = '10px';
+        particle.style.height = '10px';
+        particle.style.backgroundColor = '#ffd8eb';
+        particle.style.borderRadius = '50%';
+        particle.style.pointerEvents = 'none';
+        particle.style.zIndex = '100';
+        document.body.appendChild(particle);
+
+        const angle = Math.random() * Math.PI * 2;
+        const velocity = 2 + Math.random() * 4;
+        const vx = Math.cos(angle) * velocity;
+        const vy = Math.sin(angle) * velocity;
+        
+        let opacity = 1;
+        const animate = () => {
+          opacity -= 0.05;
+          if (opacity <= 0) {
+            particle.remove();
+            return;
+          }
+          particle.style.opacity = opacity;
+          particle.style.transform = `translate(${vx * (1 - opacity) * 20}px, ${vy * (1 - opacity) * 20}px)`;
+          requestAnimationFrame(animate);
+        };
+        animate();
+      }
+    }
+  </script>
+</body></html>
