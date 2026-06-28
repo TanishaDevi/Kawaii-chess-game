@@ -2461,3 +2461,348 @@
 <span class="material-symbols-outlined star-filled text-lg">star</span>
 <span class="material-symbols-outlined star-filled text-lg">star</span>
 <span class="material-symbols-outlined star-filled text-lg">star</span></div></div></div></main></body></html>
+                <!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@700;800&amp;family=Quicksand:wght@500;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 48;
+        }
+        
+        .kawaii-shadow {
+            box-shadow: 0 8px 0px 0px rgba(127, 79, 107, 0.15);
+        }
+        
+        .kawaii-button {
+            transition: transform 0.1s ease, box-shadow 0.1s ease;
+            box-shadow: 0 4px 0px 0px var(--tw-shadow-color);
+        }
+        
+        .kawaii-button:active {
+            transform: translateY(2px);
+            box-shadow: 0 2px 0px 0px var(--tw-shadow-color);
+        }
+
+        .recessed-box {
+            box-shadow: inset 0 2px 4px 0 rgba(0, 0, 0, 0.05);
+        }
+
+        .floating-pane {
+            backdrop-filter: blur(8px);
+            background: rgba(255, 255, 255, 0.8);
+        }
+    </style>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "error": "#ba1a1a",
+                        "primary": "#7f4f6b",
+                        "on-tertiary-container": "#006759",
+                        "surface-bright": "#fef8f4",
+                        "on-primary-fixed-variant": "#653853",
+                        "secondary": "#6252a3",
+                        "on-surface": "#1d1b19",
+                        "surface-variant": "#e7e1de",
+                        "tertiary-fixed": "#9bf3df",
+                        "outline": "#817379",
+                        "secondary-container": "#b8a7ff",
+                        "tertiary-container": "#8ce3d0",
+                        "secondary-fixed-dim": "#cbbeff",
+                        "on-tertiary": "#ffffff",
+                        "surface-container-lowest": "#ffffff",
+                        "primary-container": "#ffc2e2",
+                        "surface-dim": "#ded9d5",
+                        "surface-container": "#f3ede9",
+                        "on-primary-fixed": "#330d26",
+                        "surface-container-high": "#ede7e3",
+                        "on-error-container": "#93000a",
+                        "error-container": "#ffdad6",
+                        "tertiary": "#006b5c",
+                        "primary-fixed": "#ffd8eb",
+                        "background": "#fef8f4",
+                        "secondary-fixed": "#e7deff",
+                        "on-background": "#1d1b19",
+                        "tertiary-fixed-dim": "#7fd6c3",
+                        "on-tertiary-fixed-variant": "#005045",
+                        "surface-container-low": "#f8f2ef",
+                        "outline-variant": "#d3c2c9",
+                        "on-secondary-container": "#483888",
+                        "on-primary": "#ffffff",
+                        "surface-container-highest": "#e7e1de",
+                        "inverse-surface": "#32302e",
+                        "inverse-primary": "#f1b5d5",
+                        "primary-fixed-dim": "#f1b5d5",
+                        "on-primary-container": "#7b4c67",
+                        "inverse-on-surface": "#f5f0ec",
+                        "on-secondary-fixed-variant": "#4a3a89",
+                        "on-secondary": "#ffffff",
+                        "on-error": "#ffffff",
+                        "on-tertiary-fixed": "#00201b",
+                        "surface-tint": "#7f4f6b",
+                        "on-surface-variant": "#4f4449",
+                        "on-secondary-fixed": "#1d035d",
+                        "surface": "#fef8f4"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "1rem",
+                        "lg": "2rem",
+                        "xl": "3rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "unit": "8px",
+                        "chess-tile-gap": "2px",
+                        "gutter": "16px",
+                        "container-padding": "24px"
+                    },
+                    "fontFamily": {
+                        "headline-lg": ["Plus Jakarta Sans"],
+                        "label-sm": ["Quicksand"],
+                        "headline-lg-mobile": ["Plus Jakarta Sans"],
+                        "display-lg": ["Plus Jakarta Sans"],
+                        "body-md": ["Quicksand"]
+                    },
+                    "fontSize": {
+                        "headline-lg": ["32px", {"lineHeight": "40px", "fontWeight": "700"}],
+                        "label-sm": ["12px", {"lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "700"}],
+                        "headline-lg-mobile": ["24px", {"lineHeight": "32px", "fontWeight": "700"}],
+                        "display-lg": ["48px", {"lineHeight": "56px", "letterSpacing": "-0.02em", "fontWeight": "800"}],
+                        "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "500"}]
+                    }
+                },
+            },
+        }
+    </script>
+</head>
+<body class="bg-background text-on-background font-body-md min-h-screen flex flex-col">
+<!-- TopNavBar -->
+<header class="bg-surface-container-low dark:bg-surface-container-highest shadow-[0_8px_32px_rgba(127,79,107,0.1)] w-full top-0 sticky z-50">
+<nav class="flex justify-between items-center px-container-padding py-4 max-w-7xl mx-auto">
+<div class="font-display-lg text-display-lg text-primary drop-shadow-[0_2px_0_rgba(127,79,107,0.2)]">
+                Kawaii Chess
+            </div>
+<div class="hidden md:flex items-center gap-8">
+<a class="text-on-surface-variant font-label-sm hover:text-primary transition-all duration-200" href="#">Play</a>
+<a class="text-primary border-b-4 border-primary pb-1 font-label-sm hover:text-primary transition-all duration-200 translate-y-[2px] transition-transform" href="#">Tutorials</a>
+<a class="text-on-surface-variant font-label-sm hover:text-primary transition-all duration-200" href="#">Rankings</a>
+</div>
+<button class="kawaii-button bg-primary text-on-primary px-6 py-2 rounded-lg font-label-sm shadow-primary/30 active:translate-y-[2px]">
+                Profile
+            </button>
+</nav>
+</header>
+<main class="flex-grow max-w-7xl mx-auto w-full px-container-padding py-12 flex gap-gutter">
+<!-- Sidebar Navigation -->
+<aside class="hidden md:flex flex-col w-64 gap-gutter sticky top-28 h-fit">
+<div class="bg-surface-container rounded-lg p-6 kawaii-shadow">
+<h3 class="font-headline-lg text-headline-lg text-primary mb-4">Categories</h3>
+<nav class="flex flex-col gap-2">
+<a class="flex items-center gap-3 p-3 rounded-lg bg-primary-container text-on-primary-container transition-all" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="font-bold">Basics</span>
+</a>
+<a class="flex items-center gap-3 p-3 rounded-lg hover:bg-surface-container-highest text-on-surface-variant transition-all" href="#">
+<span class="material-symbols-outlined">auto_awesome</span>
+<span>Intermediate</span>
+</a>
+<a class="flex items-center gap-3 p-3 rounded-lg hover:bg-surface-container-highest text-on-surface-variant transition-all" href="#">
+<span class="material-symbols-outlined">workspace_premium</span>
+<span>Advanced</span>
+</a>
+</nav>
+</div>
+<div class="bg-secondary-container text-on-secondary-container rounded-lg p-6 flex flex-col gap-3 relative overflow-hidden">
+<div class="relative z-10">
+<p class="font-bold">Weekly Challenge</p>
+<p class="text-sm opacity-90">Master the Queen's Gambit to earn a heart badge!</p>
+</div>
+<span class="material-symbols-outlined absolute -right-4 -bottom-4 text-7xl opacity-20 rotate-12" style="font-variation-settings: 'FILL' 1;">favorite</span>
+</div>
+</aside>
+<!-- Content Area -->
+<section class="flex-grow">
+<div class="mb-10 flex flex-col gap-2">
+<h1 class="font-display-lg text-display-lg text-primary">Tutorial Library</h1>
+<p class="text-on-surface-variant max-w-2xl">Step-by-step guides to help you become a chess master while having fun! Choose your lesson and let's start playing. ✨</p>
+</div>
+<!-- Bento Grid of Cards -->
+<div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+<!-- Lesson Card 1 -->
+<div class="bg-surface-container-lowest rounded-lg overflow-hidden flex flex-col kawaii-shadow border-2 border-transparent hover:border-primary-container transition-all group">
+<div class="h-48 relative overflow-hidden bg-primary-fixed">
+<div class="w-full h-full bg-cover bg-center group-hover:scale-105 transition-transform duration-500" data-alt="A cute, soft-colored 3D illustration of a friendly white king and queen chess piece with tiny smiley faces, standing in a whimsical, pastel-toned garden setting with soft morning light. The style is high-end kawaii aesthetic, utilizing rounded shapes and a candy-like texture with soft pink and cream tones." style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuALfQgSaFz-IOPfAJ4o7wq1Sp3aNOjfMXdO51xQAMwB_GUOWmz0LqQU5g4YZVu6NSAYjClKbPU9IeAmE-Wfs5qwd-jDfGBcT5L_K2ZA1T4WdckQAuqFlod4NZY_BwxOsdQ2xF7KSf-TveCSFi5n0lyYbbCAbp4l2ovc-SzQTCfQYMq2MlsjLHm8qSzfskD7gB1rRyy-C6OVlamXmK-nDbfRl6uZAEzFL9l79wsW5Fyl75LT_BTGmFsVKXiey6XhxzO5cX7UG741RaY')"></div>
+<div class="absolute top-4 right-4 bg-surface-container-lowest/80 backdrop-blur px-3 py-1 rounded-full text-xs font-bold text-primary">
+                            15 min
+                        </div>
+</div>
+<div class="p-6 flex flex-col gap-4">
+<div>
+<h2 class="font-headline-lg text-headline-lg text-primary mb-1">How Pieces Move</h2>
+<p class="text-on-surface-variant text-sm">Meet the squad! Learn the unique steps and powers of each chess friend on the board.</p>
+</div>
+<div class="flex flex-col gap-2">
+<div class="flex justify-between items-center text-xs font-bold text-on-surface-variant">
+<span>Progress</span>
+<span>80%</span>
+</div>
+<div class="w-full h-3 bg-surface-container rounded-full overflow-hidden recessed-box">
+<div class="bg-primary h-full rounded-full" style="width: 80%"></div>
+</div>
+</div>
+<button class="kawaii-button w-full bg-primary text-on-primary py-3 rounded-lg font-bold shadow-primary/30 flex items-center justify-center gap-2 mt-2">
+<span class="material-symbols-outlined text-lg" style="font-variation-settings: 'FILL' 1;">play_arrow</span>
+                            Start Lesson
+                        </button>
+</div>
+</div>
+<!-- Lesson Card 2 -->
+<div class="bg-surface-container-lowest rounded-lg overflow-hidden flex flex-col kawaii-shadow border-2 border-transparent hover:border-secondary-container transition-all group">
+<div class="h-48 relative overflow-hidden bg-secondary-fixed">
+<div class="w-full h-full bg-cover bg-center group-hover:scale-105 transition-transform duration-500" data-alt="A whimsical 3D render of a chess castle piece with a cute face, performing a magical teleportation move with sparkling stardust trails in a dreamy, night-time pastel landscape. The colors are deep purples and soft lavenders, maintaining a tactile, soft-plastic appearance typical of high-quality toy design." style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuAf_oLPrWexKUNMpyyHhOeGFCFu3uDWAt289L8zFNK8B0LGmSos5YSZHFp1Y33GPtrfr0bmO2eegGmYsTuwkEB5D8R2FYI1ld--c8iX9TXp-XJJG_49m05HRElnCmW5aI4-G2NFAt2oXsU0R-IXngrj3YIzbmMPLY_H500X9wy-jdwbYB4pnJq201up2TRVwV0mtwKP6wADgd8ZSh-HorsvXD_8o-mZAIlEsbt-CXud56K83Kjq0vB6jSjfrl8m79Cx08Vf03mMVrY')"></div>
+<div class="absolute top-4 right-4 bg-surface-container-lowest/80 backdrop-blur px-3 py-1 rounded-full text-xs font-bold text-secondary">
+                            10 min
+                        </div>
+</div>
+<div class="p-6 flex flex-col gap-4">
+<div>
+<h2 class="font-headline-lg text-headline-lg text-secondary mb-1">The Art of Castling</h2>
+<p class="text-on-surface-variant text-sm">Keep your King safe! Discover the special move where two pieces work together as one.</p>
+</div>
+<div class="flex flex-col gap-2">
+<div class="flex justify-between items-center text-xs font-bold text-on-surface-variant">
+<span>Progress</span>
+<span>0%</span>
+</div>
+<div class="w-full h-3 bg-surface-container rounded-full overflow-hidden recessed-box">
+<div class="bg-secondary h-full rounded-full" style="width: 0%"></div>
+</div>
+</div>
+<button class="kawaii-button w-full bg-secondary text-on-secondary py-3 rounded-lg font-bold shadow-secondary/30 flex items-center justify-center gap-2 mt-2">
+<span class="material-symbols-outlined text-lg" style="font-variation-settings: 'FILL' 1;">play_arrow</span>
+                            Start Lesson
+                        </button>
+</div>
+</div>
+<!-- Lesson Card 3 -->
+<div class="bg-surface-container-lowest rounded-lg overflow-hidden flex flex-col kawaii-shadow border-2 border-transparent hover:border-tertiary-container transition-all group">
+<div class="h-48 relative overflow-hidden bg-tertiary-fixed">
+<div class="w-full h-full bg-cover bg-center group-hover:scale-105 transition-transform duration-500" data-alt="Cute 3D illustration of a hidden chess trap involving a tiny, colorful pawn hiding behind a fluffy cloud-like obstacle on a chess board. The art style is playful and vibrant with mint greens and soft corals, featuring volumetric lighting and a soft-focus background that looks like a miniature toy set." style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuCOcIVHcvzID_mnbtmlktK7ZSEphuWSYm4uQMUVk7ALRw22apQ7G8ozyPLPs2L27LGC-MQZxyv34eYmBvSXp9fDiWeTrDKzz5lMvUCddLGm4UsGSsW0FfcWJk_XbfQpC36RjbGeHj2gA3zYaeVhCpTnk5bFI1YGH4GJHysQZPhUdjDkXv4lh69WVIzhNqeeynmO5EeSnlKd6eEHZtsh-jffyqANf0uHYSTSJteFRJe0H1TLi3rZUXJ2d40eZtyYvsxMuPa441l80DE')"></div>
+<div class="absolute top-4 right-4 bg-surface-container-lowest/80 backdrop-blur px-3 py-1 rounded-full text-xs font-bold text-tertiary">
+                            25 min
+                        </div>
+</div>
+<div class="p-6 flex flex-col gap-4">
+<div>
+<h2 class="font-headline-lg text-headline-lg text-tertiary mb-1">Opening Traps</h2>
+<p class="text-on-surface-variant text-sm">Sneaky moves! Learn how to spot and avoid the most common tricks in the early game.</p>
+</div>
+<div class="flex flex-col gap-2">
+<div class="flex justify-between items-center text-xs font-bold text-on-surface-variant">
+<span>Progress</span>
+<span>45%</span>
+</div>
+<div class="w-full h-3 bg-surface-container rounded-full overflow-hidden recessed-box">
+<div class="bg-tertiary h-full rounded-full" style="width: 45%"></div>
+</div>
+</div>
+<button class="kawaii-button w-full bg-tertiary text-on-tertiary py-3 rounded-lg font-bold shadow-tertiary/30 flex items-center justify-center gap-2 mt-2">
+<span class="material-symbols-outlined text-lg" style="font-variation-settings: 'FILL' 1;">play_arrow</span>
+                            Start Lesson
+                        </button>
+</div>
+</div>
+<!-- Lesson Card 4 -->
+<div class="bg-surface-container-lowest rounded-lg overflow-hidden flex flex-col kawaii-shadow border-2 border-transparent hover:border-primary-container transition-all group">
+<div class="h-48 relative overflow-hidden bg-primary-fixed-dim">
+<div class="w-full h-full bg-cover bg-center group-hover:scale-105 transition-transform duration-500" data-alt="A tiny, heroic pawn piece reaching the end of the board and transforming into a majestic, glittering queen piece in a burst of soft-glowing magical light. Whimsical 3D art with a focus on tactile plastic textures, warm sunlight, and a palette of rose gold and creamy whites." style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuDK1K9RROx-WsNeqlqIdE6xultLMQABD2mghvovngeKqFJxDCOSpEd772T7adRh-6l2PhOmN9zswx89zOqLTYk2q9RPflpqh0DKzkpWv8WuNrh1rjqlO9qW8nSdWGwiFpQgEvwSv-vsiwY1khZygpLPHhLpXryqkdkwnyxLBzCK1M5qaMJzJe9O1pIJLoHujdjJtAiwaSy-awJg34hRy1UT2sIGNqwExebcPMN_Y9-3SGsAdnDQ0FT6q1iG8XLTFTGU-O0ncCpY3Pg')"></div>
+<div class="absolute top-4 right-4 bg-surface-container-lowest/80 backdrop-blur px-3 py-1 rounded-full text-xs font-bold text-primary">
+                            12 min
+                        </div>
+</div>
+<div class="p-6 flex flex-col gap-4">
+<div>
+<h2 class="font-headline-lg text-headline-lg text-primary mb-1">Pawn Promotion</h2>
+<p class="text-on-surface-variant text-sm">Dream big! Help your bravest pawns reach the final row to become a mighty Queen.</p>
+</div>
+<div class="flex flex-col gap-2">
+<div class="flex justify-between items-center text-xs font-bold text-on-surface-variant">
+<span>Progress</span>
+<span>10%</span>
+</div>
+<div class="w-full h-3 bg-surface-container rounded-full overflow-hidden recessed-box">
+<div class="bg-primary h-full rounded-full" style="width: 10%"></div>
+</div>
+</div>
+<button class="kawaii-button w-full bg-primary text-on-primary py-3 rounded-lg font-bold shadow-primary/30 flex items-center justify-center gap-2 mt-2">
+<span class="material-symbols-outlined text-lg" style="font-variation-settings: 'FILL' 1;">play_arrow</span>
+                            Start Lesson
+                        </button>
+</div>
+</div>
+</div>
+</section>
+</main>
+<!-- Footer -->
+<footer class="bg-surface-dim dark:bg-surface-container-lowest py-8 mt-auto">
+<div class="flex flex-col md:flex-row justify-between items-center px-container-padding gap-gutter w-full max-w-7xl mx-auto">
+<div class="flex flex-col items-center md:items-start gap-2">
+<div class="font-headline-lg text-headline-lg text-primary">Kawaii Chess</div>
+<p class="text-on-surface-variant text-sm">© 2024 Kawaii Chess. Made with love and sparkles! ✨</p>
+</div>
+<div class="flex gap-6 items-center">
+<a class="text-on-surface-variant font-label-sm hover:text-tertiary hover:underline transition-all" href="#">Support</a>
+<a class="text-on-surface-variant font-label-sm hover:text-tertiary hover:underline transition-all" href="#">Privacy</a>
+<a class="text-on-surface-variant font-label-sm hover:text-tertiary hover:underline transition-all" href="#">Terms</a>
+<div class="flex gap-4 ml-4">
+<a class="w-8 h-8 rounded-full bg-surface-container-high flex items-center justify-center text-on-surface-variant hover:scale-95 transition-all" href="#">
+<span class="material-symbols-outlined text-sm">chat</span>
+</a>
+<a class="w-8 h-8 rounded-full bg-surface-container-high flex items-center justify-center text-on-surface-variant hover:scale-95 transition-all" href="#">
+<span class="material-symbols-outlined text-sm">share</span>
+</a>
+</div>
+</div>
+</div>
+</footer>
+<script>
+        // Micro-interaction for lesson cards
+        document.querySelectorAll('.kawaii-button').forEach(button => {
+            button.addEventListener('mouseenter', () => {
+                // Potential for adding sparkle sound or subtle animation trigger
+            });
+        });
+
+        // Floating sparkles effect logic
+        function createSparkle() {
+            const sparkle = document.createElement('div');
+            sparkle.innerHTML = '✨';
+            sparkle.className = 'absolute pointer-events-none text-primary-container opacity-40';
+            sparkle.style.left = Math.random() * 100 + 'vw';
+            sparkle.style.top = Math.random() * 100 + 'vh';
+            sparkle.style.fontSize = (Math.random() * 20 + 10) + 'px';
+            sparkle.style.transition = 'all 5s ease-in-out';
+            
+            document.body.appendChild(sparkle);
+            
+            setTimeout(() => {
+                sparkle.style.transform = `translate(${Math.random() * 100 - 50}px, ${Math.random() * 100 - 50}px) scale(0)`;
+                sparkle.style.opacity = '0';
+            }, 100);
+
+            setTimeout(() => {
+                sparkle.remove();
+            }, 5000);
+        }
+
+        setInterval(createSparkle, 2000);
+    </script>
+</body></html>
